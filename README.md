@@ -8,7 +8,6 @@ Application switcher: Rofi
 
 ## .bashrc
 messy file.
-
 adds:
  - cool ps1 terminal prompt colours
  - current git branch
