@@ -2,6 +2,8 @@
 
 My repo for tracking some of my customisation to my linux laptops/desktops.
 
+## Vimrc
+basic vimrc file with a few enhancements to make vim not so shit
 
 ## i3-gaps
 Application switcher: Rofi
