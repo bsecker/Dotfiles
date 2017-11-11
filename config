@@ -254,10 +254,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym odiaeresis resize grow width 5 px or 5 ppt
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -321,8 +321,27 @@ bar {
 bindsym $mod+m bar mode toggle
 
 # Theme colors
+set_from_resource       $black          color0
+set_from_resource       $dgrey          color8
+set_from_resource       $dred           color1
+set_from_resource       $red            color9
+set_from_resource       $dgreen         color2
+set_from_resource       $green          color10
+set_from_resource       $dyellow        color3
+set_from_resource       $yellow         color11
+set_from_resource       $dblue          color4
+set_from_resource       $blue           color12
+set_from_resource       $dmagenta       color5
+set_from_resource       $magenta        color13
+set_from_resource       $dcyan          color6
+set_from_resource       $cyan           color14
+set_from_resource       $lgrey          color7
+set_from_resource       $white          color15
+
+
 # class                 border  backgr. text    indic.  child_border
-client.focused          #808280 #808280 #80FFF9 #FDF6E3
+# client.focused          #808280 #808280 #80FFF9 #FDF6E3
+client.focused          $dyellow $dyellow $dyellow $dyellow 
 client.focused_inactive #434745 #434745 #16A085 #454948
 client.unfocused        #434745 #434745 #16A085 #454948
 client.urgent           #CB4B16 #FDF6E3 #16A085 #268BD2
