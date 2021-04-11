@@ -2,7 +2,7 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/bsecker/.oh-my-zsh"
+export ZSH="/home/$(whoami)/.oh-my-zsh"
 
 
 ZSH_THEME="af-magic"
@@ -25,7 +25,8 @@ source $ZSH/oh-my-zsh.sh
 
 alias kc=kubectl
 alias please=sudo
-alias home=cd /c/Users/b.secker/
+alias lah='ls -lah'
 
 # Work-Specific stuff
 export DOCKER_HOST=tcp://localhost:2375 # WSL1 docker integration
+alias home='cd /mnt/c/Users/b.secker/'
