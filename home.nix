@@ -1,0 +1,39 @@
+{ pkgs, ... }: {
+  home.stateVersion = "25.11";
+
+  home.packages = [
+    pkgs.eza
+  ];
+
+  programs.home-manager.enable = true;
+
+  programs.git = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Benjamin Secker";
+        email = "benjamin.secker@ethon.ai";
+      };
+    };
+  };
+
+  programs = {
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+
+      shellAliases = {
+        dont = "cd ~/Work/dontpanic";
+        ls = "eza";
+        ll = "eza -l";
+        la = "eza -la";
+      };
+
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" "z" ];
+        theme = "robbyrussell";
+      };
+    };
+  };
+}
