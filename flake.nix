@@ -14,6 +14,8 @@
     configuration = { pkgs, ... }: {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
+      # NOTE: I struggle to run apps that need a GUI or get put in /Applications because Gatekeeper gets in the way
+      # use homebrew for those apps instead until I figure out how to fix this
       environment.systemPackages =
         [ 
           pkgs.vim 
