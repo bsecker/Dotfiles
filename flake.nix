@@ -60,6 +60,10 @@
           "com.apple.AdLib" = {
             allowApplePersonalizedAdvertising = false;
           };
+          # Disable press-and-hold accent popup in VS Code so key repeat works (e.g. for Vim mode)
+          "com.microsoft.VSCode" = {
+            ApplePressAndHoldEnabled = false;
+          };
         };
 
         # Show battery percentage in the menu bar

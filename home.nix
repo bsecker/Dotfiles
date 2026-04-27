@@ -9,6 +9,7 @@
 
   programs.git = {
     enable = true;
+    lfs.enable = true;
     settings = {
       user = {
         name = "Benjamin Secker";
@@ -27,6 +28,7 @@
         ls = "eza";
         ll = "eza -l";
         la = "eza -la";
+        ws = "workstation";
       };
 
       oh-my-zsh = {

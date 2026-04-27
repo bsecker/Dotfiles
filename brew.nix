@@ -5,6 +5,7 @@
       "cmux"
       "scroll-reverser"
       "tailscale"
+      "homerow"
     ];
   };
 }
