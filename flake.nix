@@ -64,6 +64,11 @@
           "com.microsoft.VSCode" = {
             ApplePressAndHoldEnabled = false;
           };
+
+          # disable press-and-hold in Obsidian
+          "md.obsidian" = {
+            ApplePressAndHoldEnabled = false;
+          };
         };
 
         # Show battery percentage in the menu bar

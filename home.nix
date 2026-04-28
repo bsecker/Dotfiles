@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   home.stateVersion = "25.11";
 
   home.packages = [
@@ -38,4 +38,9 @@
       };
     };
   };
+
+  # cmux settings  - out of store symlink so that we can make edits to the file from cmux
+  xdg.configFile."cmux/settings.json".source =
+    config.lib.file.mkOutOfStoreSymlink
+      "/etc/nix-darwin/.config/cmux/settings.json";
 }
