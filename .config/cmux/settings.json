@@ -8,7 +8,7 @@
     // cmux creates this template on launch when both settings file locations are missing.
     // ~/.config/cmux/settings.json takes precedence over the Application Support fallback.
   
-    //   "app" : {
+       "app" : {
     //     "appearance" : "system",
     //     "appIcon" : "automatic",
     //     "commandPaletteSearchesAllSurfaces" : false,
@@ -20,9 +20,9 @@
     //     "preferredEditor" : "",
     //     "renameSelectsExistingName" : true,
     //     "reorderOnNotification" : true,
-    //     "sendAnonymousTelemetry" : true,
+         "sendAnonymousTelemetry" : false
     //     "warnBeforeQuit" : true
-    //   },
+       },
   
     //   "notifications" : {
     //     "command" : "",
