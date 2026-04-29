@@ -60,6 +60,11 @@
           "com.apple.AdLib" = {
             allowApplePersonalizedAdvertising = false;
           };
+
+          # Enable spaces to span displays
+          spaces.spans-displays = true;
+
+
           # Disable press-and-hold accent popup in VS Code so key repeat works (e.g. for Vim mode)
           "com.microsoft.VSCode" = {
             ApplePressAndHoldEnabled = false;
