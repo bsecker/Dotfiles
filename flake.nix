@@ -65,7 +65,13 @@
             ApplePressAndHoldEnabled = false;
           };
 
-          # disable press-and-hold in Obsidian
+          # also for Cursor, yes this is really the bundle ID
+          # https://forum.cursor.com/t/cursor-bundle-identifier/779/4
+          "com.todesktop.230313mzl4w4u92" = {
+            ApplePressAndHoldEnabled = false;
+          };
+
+          # also for Obsidian
           "md.obsidian" = {
             ApplePressAndHoldEnabled = false;
           };

@@ -19,6 +19,11 @@
   };
 
   programs = {
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -29,6 +34,12 @@
         ll = "eza -l";
         la = "eza -la";
         ws = "workstation";
+        tf = "tofu";
+        terraform = "tofu";
+        tfi = "tofu init";
+        tfp = "tofu plan";
+        tfa = "tofu apply";
+        tfyeet = "tofu apply -auto-approve";
       };
 
       oh-my-zsh = {
