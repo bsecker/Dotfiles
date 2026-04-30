@@ -28,6 +28,13 @@
       enable = true;
       enableCompletion = true;
 
+      initContent = ''
+        # Add Homebrew (Apple Silicon) to PATH for casks installed via nix-darwin
+        if [ -x /opt/homebrew/bin/brew ]; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+      '';
+
       shellAliases = {
         dont = "cd ~/Work/dontpanic";
         ls = "eza";
