@@ -3,6 +3,10 @@ let
   username = "benjamin";
   homeDir = "/Users/${username}";
 in {
+  _module.args = {
+    extraBrewCasks = [];
+    extraBrewFormulas = [];
+  };
   system.primaryUser = username;
   users.users.${username} = {
     name = username;

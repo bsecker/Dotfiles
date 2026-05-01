@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ extraBrewCasks ? [], extraBrewFormulas ? [], ... }: {
   homebrew = {
     enable = true;
     casks = [
@@ -7,6 +7,7 @@
       "tailscale"
       "homerow"
       "codex"
-    ];
+    ] ++ extraBrewCasks;
+    brews = extraBrewFormulas;
   };
 }
