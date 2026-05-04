@@ -3,8 +3,9 @@
   home.homeDirectory = homeDir;
   home.stateVersion = "25.11";
 
-  home.packages = [
-    pkgs.eza
+  home.packages = with pkgs; [
+    eza
+    uv
   ];
 
   programs.home-manager.enable = true;
