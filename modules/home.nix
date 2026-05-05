@@ -7,6 +7,8 @@
     eza
     uv
     just
+    bun
+    github-cli
   ];
 
   programs.home-manager.enable = true;

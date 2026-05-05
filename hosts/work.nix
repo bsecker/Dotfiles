@@ -4,8 +4,9 @@ let
   homeDir = "/Users/${username}";
 in {
   _module.args = {
-    extraBrewCasks = [];
-    extraBrewFormulas = [];
+    extraBrewCasks = [ "1password-cli" ];
+    extraBrewFormulas = [
+    ];
   };
   system.primaryUser = username;
   users.users.${username} = {
