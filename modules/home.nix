@@ -9,6 +9,7 @@
     just
     bun
     github-cli
+    nixfmt
   ];
 
   programs.home-manager.enable = true;

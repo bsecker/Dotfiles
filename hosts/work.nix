@@ -5,8 +5,7 @@ let
 in {
   _module.args = {
     extraBrewCasks = [ "1password-cli" ];
-    extraBrewFormulas = [
-    ];
+    extraBrewFormulas = [];
   };
   system.primaryUser = username;
   users.users.${username} = {
