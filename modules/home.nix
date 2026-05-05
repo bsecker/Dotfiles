@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     eza
     uv
+    just
   ];
 
   programs.home-manager.enable = true;
