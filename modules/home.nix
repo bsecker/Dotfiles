@@ -1,4 +1,13 @@
-{ config, pkgs, username, homeDir, gitEmail, extraShellAliases ? {}, ... }: {
+{
+  config,
+  pkgs,
+  username,
+  homeDir,
+  gitEmail,
+  extraShellAliases ? { },
+  ...
+}:
+{
   home.username = username;
   home.homeDirectory = homeDir;
   home.stateVersion = "25.11";
@@ -54,11 +63,19 @@
         kc = "kubectl";
         please = "sudo";
         lah = "ls -lah";
-      } // extraShellAliases;
+      }
+      // extraShellAliases;
 
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "z" "colored-man-pages" "docker-compose" "docker" "kubectl"];
+        plugins = [
+          "git"
+          "z"
+          "colored-man-pages"
+          "docker-compose"
+          "docker"
+          "kubectl"
+        ];
         theme = "af-magic";
       };
     };
@@ -66,6 +83,5 @@
 
   # cmux settings - out of store symlink so that we can make edits to the file from cmux
   xdg.configFile."cmux/settings.json".source =
-    config.lib.file.mkOutOfStoreSymlink
-      "/etc/nix-darwin/.config/cmux/settings.json";
+    config.lib.file.mkOutOfStoreSymlink "/etc/nix-darwin/.config/cmux/settings.json";
 }
