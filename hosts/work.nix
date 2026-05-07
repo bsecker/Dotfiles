@@ -22,6 +22,7 @@ in {
     gitEmail = "benjamin.secker@ethon.ai";
     extraShellAliases = {
       dont = "cd ~/Work/dontpanic";
+      morning = "gcloud auth application-default login && aws sso login";
     };
   };
 }
