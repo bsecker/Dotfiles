@@ -26,9 +26,12 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    settings.user = {
-      name = "Benjamin Secker";
-      email = gitEmail;
+    settings = {
+      user = {
+        name = "Benjamin Secker";
+        email = gitEmail;
+      };
+      push.autoSetupRemote = true;
     };
   };
 
