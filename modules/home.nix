@@ -19,6 +19,8 @@
     bun
     github-cli
     nixfmt
+claude-code
+
   ];
 
   programs.home-manager.enable = true;

@@ -8,6 +8,6 @@
       "homerow"
       "codex"
     ] ++ extraBrewCasks;
-    brews = extraBrewFormulas;
+    brews = [ "htop" ] ++ extraBrewFormulas;
   };
 }
