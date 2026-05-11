@@ -19,8 +19,9 @@
     bun
     github-cli
     nixfmt
-claude-code
-
+    claude-code
+    bat
+    procps
   ];
 
   programs.home-manager.enable = true;
@@ -68,6 +69,7 @@ claude-code
         kc = "kubectl";
         please = "sudo";
         lah = "ls -lah";
+        cat = "bat";
       }
       // extraShellAliases;
 
