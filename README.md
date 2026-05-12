@@ -2,10 +2,10 @@
 
 My repo for tracking some of my customisation to my laptops/desktops.
 
-
 ## Setup
 
 roughly
+
 ```
 # install homebrew manually, first
 sudo mkdir -p /etc/nix-darwin
@@ -18,3 +18,9 @@ git clone https://github.com/bsecker/dotfiles
 sudo nix --extra-experimental-features 'nix-command flakes' run nix-darwin/nix-darwin-25.11#darwin-rebuild -- switch
    --flake .#Benjamin-Laptop-Home 2>&1
 ```
+
+## TODOs
+
+- [ ] cmux dotfile overriding don't seem to work correctly
+- [ ] automate nvim dotfiles, override $EDITOR default to use
+- [x] fzf reverse search seems broken on home laptop?
