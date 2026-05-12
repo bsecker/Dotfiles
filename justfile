@@ -1,8 +1,8 @@
 default:
     @just --list
 
-switch-home:
+home:
     sudo darwin-rebuild switch --flake .#Benjamin-Laptop-Home
 
-switch-work:
+work:
     sudo darwin-rebuild switch --flake .#Benjamins-MacBook-Pro

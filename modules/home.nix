@@ -22,6 +22,13 @@
     claude-code
     bat
     procps
+    ripgrep
+    fd
+    jq
+    wget
+    lazygit
+    neovim
+    tree-sitter
   ];
 
   programs.home-manager.enable = true;
