@@ -6,6 +6,7 @@
       "scroll-reverser"
       "tailscale"
       "homerow"
+      "zen"
     ] ++ extraBrewCasks;
     brews = [ "htop" ] ++ extraBrewFormulas;
   };

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   username,
   homeDir,
   gitEmail,
@@ -19,7 +20,7 @@
     bun
     github-cli
     nixfmt
-    claude-code
+    pkgs-unstable.claude-code
     bat
     procps
     ripgrep
@@ -29,6 +30,7 @@
     lazygit
     neovim
     tree-sitter
+    pkgs-unstable.devenv
   ];
 
   programs.home-manager.enable = true;

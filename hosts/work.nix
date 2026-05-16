@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 let
   username = "benjaminsecker";
   homeDir = "/Users/${username}";
@@ -18,7 +18,7 @@ in {
   home-manager.backupFileExtension = "backup";
   home-manager.users.${username} = import ../modules/home.nix;
   home-manager.extraSpecialArgs = {
-    inherit username homeDir;
+    inherit username homeDir pkgs-unstable;
     gitEmail = "benjamin.secker@ethon.ai";
     extraShellAliases = {
       dont = "cd ~/Work/dontpanic";

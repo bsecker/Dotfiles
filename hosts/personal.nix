@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 let
   username = "benjamin";
   homeDir = "/Users/${username}";
@@ -28,7 +28,7 @@ in {
     '';
   };
   home-manager.extraSpecialArgs = {
-    inherit username homeDir;
+    inherit username homeDir pkgs-unstable;
     gitEmail = "benjamin.secker@gmail.com";
     extraShellAliases = {
       hl="/Users/benjamin/Personal/Projects/homelab/homelab.sh";
