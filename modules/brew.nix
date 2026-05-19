@@ -1,14 +1,14 @@
 { extraBrewCasks ? [], extraBrewFormulas ? [], ... }: {
   homebrew = {
     enable = true;
-    # taps = [ "nikitabobko/tap" ];
+    taps = [ "nikitabobko/tap" ];
     casks = [
       "cmux"
       "scroll-reverser"
       "tailscale"
       "homerow"
       "zen"
-      # "aerospace"
+      "aerospace"
     ] ++ extraBrewCasks;
     brews = [ "htop" ] ++ extraBrewFormulas;
   };
