@@ -79,7 +79,7 @@
         please = "sudo";
         lah = "ls -lah";
         cat = "bat";
-        gloga = "git log --oneline --decorate --color --graph --all"
+        gloga = "git log --oneline --decorate --color --graph --all";
       }
       // extraShellAliases;
 
