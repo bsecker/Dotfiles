@@ -171,3 +171,21 @@ on-mode-changed = []
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
+
+# TODO also add Zen browser
+[[on-window-detected]]
+if.app-id = "company.thebrowser.Browser"
+run = "move-node-to-workspace 1"
+
+# TODO also add other terms
+[[on-window-detected]]
+if.app-id = "com.cmuxterm.app"
+run = "move-node-to-workspace 2"
+
+[[on-window-detected]]
+if.app-id = "com.todesktop.230313mzl4w4u92"
+run = "move-node-to-workspace 3"
+
+[[on-window-detected]]
+if.app-id = "md.obsidian"
+run = "move-node-to-workspace 4"
