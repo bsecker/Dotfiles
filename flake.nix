@@ -1,5 +1,5 @@
 {
-  description = "nix-darwin system flake";
+  description = "nix-darwin & home-manager system flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
@@ -23,12 +23,26 @@
         hostModule
       ];
     };
+
+    mkHome = { system, hostModule }: home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+      extraSpecialArgs = {
+        pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
+      };
+      modules = [ hostModule ];
+    };
   in
   {
     # Build with: darwin-rebuild build --flake .#Benjamins-MacBook-Pro
-    darwinConfigurations."Benjamins-MacBook-Pro" = mkSystem ./hosts/work.nix;
+    darwinConfigurations."Benjamins-MacBook-Pro" = mkSystem ./hosts/macos-ethon.nix;
 
     # Build with: darwin-rebuild build --flake .#Benjamin-Laptop-Home
-    darwinConfigurations."Benjamin-Laptop-Home" = mkSystem ./hosts/personal.nix;
+    darwinConfigurations."Benjamin-Laptop-Home" = mkSystem ./hosts/macos-personal.nix;
+
+    # Build with: home-manager switch --flake .#benjamin@linux-desktop
+    homeConfigurations."benjamin@linux-desktop" = mkHome {
+      system = "x86_64-linux";
+      hostModule = ./hosts/linux-desktop.nix;
+    };
   };
 }

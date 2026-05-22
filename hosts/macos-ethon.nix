@@ -16,7 +16,7 @@ in {
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.backupFileExtension = "backup";
-  home-manager.users.${username} = import ../modules/home.nix;
+  home-manager.users.${username} = import ../modules/home-darwin.nix;
   home-manager.extraSpecialArgs = {
     inherit username homeDir pkgs-unstable;
     gitEmail = "benjamin.secker@ethon.ai";

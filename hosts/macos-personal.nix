@@ -17,7 +17,7 @@ in {
   home-manager.useUserPackages = true;
   home-manager.backupFileExtension = "backup";
   home-manager.users.${username} = {
-    imports = [ ../modules/home.nix ];
+    imports = [ ../modules/home-darwin.nix ];
     # React Native development https://reactnative.dev/docs/set-up-your-environment?platform=android
     programs.zsh.sessionVariables = {
       JAVA_HOME = "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home";
