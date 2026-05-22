@@ -6,3 +6,6 @@ home:
 
 work:
     sudo darwin-rebuild switch --flake .#Benjamins-MacBook-Pro
+
+desktop:
+    home-manager switch --flake .#benjamin@linux-desktop

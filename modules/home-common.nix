@@ -20,6 +20,7 @@
     github-cli
     nixfmt
     pkgs-unstable.claude-code
+    pkgs-unstable.devenv
     bat
     procps
     ripgrep
@@ -29,7 +30,12 @@
     lazygit
     neovim
     tree-sitter
-    pkgs-unstable.devenv
+    ranger
+    
+    # neovim
+    neovim
+    gcc # required for lazyvim treesitter to work, is there a better way than installing gcc globally?
+    lazygit
   ];
 
   programs.home-manager.enable = true;

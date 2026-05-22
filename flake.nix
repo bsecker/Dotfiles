@@ -8,9 +8,13 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    zen-browser = {
+	url = "github:youwen5/zen-browser-flake";
+      	inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, zen-browser }:
   let
     mkSystem = hostModule: nix-darwin.lib.darwinSystem {
       specialArgs = {
@@ -27,6 +31,7 @@
     mkHome = { system, hostModule }: home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
       extraSpecialArgs = {
+	inherit zen-browser;
         pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
       };
       modules = [ hostModule ];

@@ -2,9 +2,25 @@
 
 My repo for tracking some of my customisation to my laptops/desktops.
 
-## Setup
+## Setup (linux)
 
-roughly
+```
+# base install
+sudo apt install curl
+# install determinate nix - better and faster than base nix
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+# install flake
+nix run home-manager/release-25.11 -- switch --flake github:bsecker/dotfiles#benjamin@linux-desktop -b backup
+
+# ensure that we can use zsh as the default shell (blocked otherwise by chsh)
+echo "$(which zsh)" | sudo tee -a /etc/shells
+chsh -s $(which zsh)
+```
+
+
+## Setup (macos)
+
+roughly...
 
 ```
 # install homebrew manually, first
