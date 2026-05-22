@@ -9,12 +9,16 @@
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     zen-browser = {
-	url = "github:youwen5/zen-browser-flake";
-      	inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, zen-browser }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, zen-browser, niri-flake }:
   let
     mkSystem = hostModule: nix-darwin.lib.darwinSystem {
       specialArgs = {
@@ -29,12 +33,19 @@
     };
 
     mkHome = { system, hostModule }: home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [ niri-flake.overlays.niri ];
+      };
       extraSpecialArgs = {
-	inherit zen-browser;
+        inherit zen-browser;
         pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
       };
-      modules = [ hostModule ];
+      modules = [
+        hostModule
+        niri-flake.homeModules.niri
+      ];
     };
   in
   {

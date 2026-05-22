@@ -13,8 +13,8 @@
   home.stateVersion = "25.11";
 
   home.packages = with pkgs; [
+    # shell tools
     eza
-    uv
     just
     bun
     github-cli
@@ -27,15 +27,19 @@
     fd
     jq
     wget
-    lazygit
-    neovim
-    tree-sitter
     ranger
     
-    # neovim
+    # python
+    python3
+    uv
+    
+    
+    # neovim and stuff
+    tree-sitter
     neovim
     gcc # required for lazyvim treesitter to work, is there a better way than installing gcc globally?
     lazygit
+    nodejs # Mason needs npm to install LSP servers (yaml-ls, pyright, dockerfile-ls, etc.)
   ];
 
   programs.home-manager.enable = true;

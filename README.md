@@ -15,8 +15,22 @@ nix run home-manager/release-25.11 -- switch --flake github:bsecker/dotfiles#ben
 # ensure that we can use zsh as the default shell (blocked otherwise by chsh)
 echo "$(which zsh)" | sudo tee -a /etc/shells
 chsh -s $(which zsh)
-```
 
+# add the following to /etc/environment so that gnome etc can find .desktop files
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/benjamin/.nix-profile/bin"
+XDG_DATA_DIRS="/home/benjamin/.nix-profile/share:/usr/local/share:/usr/share"
+
+# Manually set up a .desktop file for niri
+sudo tee /usr/share/wayland-sessions/niri.desktop << 'EOF'
+[Desktop Entry]
+Name=Niri
+Comment=A scrollable-tiling Wayland compositor
+Exec=/home/benjamin/.nix-profile/bin/niri-session
+Type=Application
+DesktopNames=niri
+EOF
+
+```
 
 ## Setup (macos)
 
@@ -40,3 +54,26 @@ sudo nix --extra-experimental-features 'nix-command flakes' run nix-darwin/nix-d
 - [ ] cmux dotfile overriding don't seem to work correctly
 - [ ] automate nvim dotfiles, override $EDITOR default to use
 - [x] fzf reverse search seems broken on home laptop?
+
+linux
+
+- [x] fix nerd fonts not applying
+- [ ] install i3 or equivalent
+
+## Things to look into
+
+```
+Status Bar: waybar, eww, or custom scripts
+Notifications: mako, swaync, or dunst
+App Launcher: rofi, wofi, fuzzel, or tofi
+Screen Locking: swaylock, hyprlock, or gtklock
+Idle Management: swayidle, hypridle
+System Tools: htop, btop, nm-applet, blueman, pavucontrol
+Audio Control: pavucontrol, pamixer scripts
+Brightness Control: brightnessctl with custom bindings
+Clipboard Manager: clipman, cliphist, or wl-clipboard scripts
+Wallpaper Management: swaybg, swww, hyprpaper, or wpaperd
+Theming: manually configuring gtk, qt, various apps, bars, compositor gaps and colors
+Power Management: custom scripts or additional daemons
+Greeter: gdm, sddm, lightdm, greetd
+```
