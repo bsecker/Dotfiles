@@ -12,13 +12,9 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri-flake = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, zen-browser, niri-flake }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, zen-browser }:
   let
     mkSystem = hostModule: nix-darwin.lib.darwinSystem {
       specialArgs = {
@@ -36,7 +32,7 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
-        overlays = [ niri-flake.overlays.niri ];
+
       };
       extraSpecialArgs = {
         inherit zen-browser;
@@ -44,7 +40,6 @@
       };
       modules = [
         hostModule
-        niri-flake.homeModules.niri
       ];
     };
   in
