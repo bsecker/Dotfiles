@@ -2,7 +2,7 @@
 
 My repo for tracking some of my customisation to my laptops/desktops.
 
-## Setup (linux)
+## Setup (Ubuntu)
 
 ```
 # base install
@@ -16,19 +16,17 @@ nix run home-manager/release-25.11 -- switch --flake github:bsecker/dotfiles#ben
 echo "$(which zsh)" | sudo tee -a /etc/shells
 chsh -s $(which zsh)
 
-# add the following to /etc/environment so that gnome etc can find .desktop files
-PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/benjamin/.nix-profile/bin"
-XDG_DATA_DIRS="/home/benjamin/.nix-profile/share:/usr/local/share:/usr/share"
+# Install tailscale manually
+curl -fsSL https://tailscale.com/install.sh | sh
 
-# Manually set up a .desktop file for niri
-sudo tee /usr/share/wayland-sessions/niri.desktop << 'EOF'
-[Desktop Entry]
-Name=Niri
-Comment=A scrollable-tiling Wayland compositor
-Exec=/home/benjamin/.nix-profile/bin/niri-session
-Type=Application
-DesktopNames=niri
-EOF
+# Install zen manually (couldn't get hardware acceleration working, didn't want to go down the NixGL route)
+# see also https://alternativebit.fr/posts/nixos/nix-opengl-and-ubuntu-integration-nightmare/
+curl -fsSL https://github.com/zen-browser/updates-server/raw/refs/heads/main/install.sh | $SHELL
+
+# Install other stuff manually:
+# Cursor
+# Discord (tbh this does work with nix but is a bit laggy)
+# Alacritty
 
 ```
 

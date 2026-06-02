@@ -40,11 +40,6 @@
     gcc # required for lazyvim treesitter to work, is there a better way than installing gcc globally?
     lazygit
     nodejs # Mason needs npm to install LSP servers (yaml-ls, pyright, dockerfile-ls, etc.)
-
-    # apps (todo: should we make this home/work split?)
-    (pkgs.discord.override {
-      commandLineArgs = "--no-sandbox";
-    })
   ];
 
   programs.home-manager.enable = true;
