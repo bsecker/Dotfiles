@@ -97,6 +97,9 @@
         ];
         theme = "af-magic";
       };
+      initContent = ''
+        eval "$(devenv hook zsh)"
+      '';
     };
   };
 }

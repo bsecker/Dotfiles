@@ -49,6 +49,7 @@ sudo nix --extra-experimental-features 'nix-command flakes' run nix-darwin/nix-d
 
 ## TODOs
 
+- [ ] update zsh history (home-manager config)
 - [ ] cmux dotfile overriding don't seem to work correctly
 - [ ] automate nvim dotfiles, override $EDITOR default to use
 - [x] fzf reverse search seems broken on home laptop?
