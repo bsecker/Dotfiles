@@ -23,10 +23,11 @@ curl -fsSL https://tailscale.com/install.sh | sh
 # see also https://alternativebit.fr/posts/nixos/nix-opengl-and-ubuntu-integration-nightmare/
 curl -fsSL https://github.com/zen-browser/updates-server/raw/refs/heads/main/install.sh | $SHELL
 
-# Install other stuff manually:
+# Install electron apps manually, because wrapping this with nix is painful
 # Cursor
 # Discord (tbh this does work with nix but is a bit laggy)
-# Alacritty
+# Alacritty (needs building from source?)
+# Signal
 
 ```
 

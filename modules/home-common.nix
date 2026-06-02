@@ -28,6 +28,7 @@
     jq
     wget
     ranger
+    direnv
     
     # python
     python3
