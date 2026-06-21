@@ -11,8 +11,8 @@
 
   # out of store symlinks so that we can make edits to the file from cmux and it comes up in repo
   # cmux settings
-  xdg.configFile."cmux/settings.json".source =
-    config.lib.file.mkOutOfStoreSymlink "/etc/nix-darwin/.config/cmux/settings.json";
+  xdg.configFile."cmux/cmux.json".source =
+    config.lib.file.mkOutOfStoreSymlink "/etc/nix-darwin/.config/cmux/cmux.json";
 
   # AeroSpace config
   home.file.".aerospace.toml".source =
