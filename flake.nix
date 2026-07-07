@@ -8,13 +8,9 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, zen-browser }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager }:
   let
     mkSystem = hostModule: nix-darwin.lib.darwinSystem {
       specialArgs = {
@@ -35,7 +31,6 @@
 
       };
       extraSpecialArgs = {
-        inherit zen-browser;
         pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
       };
       modules = [
@@ -54,6 +49,12 @@
     homeConfigurations."benjamin@linux-desktop" = mkHome {
       system = "x86_64-linux";
       hostModule = ./hosts/linux-desktop.nix;
+    };
+
+    # Build with: home-manager switch --flake .#benjamin@linux-cdds-laptop
+    homeConfigurations."benjamin@linux-cdds-laptop" = mkHome {
+      system = "x86_64-linux";
+      hostModule = ./hosts/linux-cdds-laptop.nix;
     };
   };
 }

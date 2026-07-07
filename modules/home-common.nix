@@ -19,8 +19,6 @@
     bun
     github-cli
     nixfmt
-    pkgs-unstable.claude-code
-    pkgs-unstable.devenv
     bat
     procps
     ripgrep
@@ -29,12 +27,17 @@
     wget
     ranger
     direnv
-    
+
+    # things I generally want to be more on the bleeding edge on
+    pkgs-unstable.claude-code
+    pkgs-unstable.devenv
+    pkgs-unstable.codex
+
     # python
     python3
     uv
-    
-    
+
+
     # neovim and stuff
     tree-sitter
     neovim
