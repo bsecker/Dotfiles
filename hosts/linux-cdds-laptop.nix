@@ -10,7 +10,8 @@ in
     inherit username homeDir;
     gitEmail = "benjamin.secker@cdds.ai";
     extraShellAliases = {
-      repo = "cd ~/Work/cdds_ws";
+      ws = "cd ~/Work/cdds_ws";
+      notes = "cd ~/Work/cdds_notes";
     };
   };
 }

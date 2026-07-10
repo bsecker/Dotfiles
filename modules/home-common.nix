@@ -27,11 +27,15 @@
     wget
     ranger
     direnv
+    gnumake
+    htop
+    dive
 
     # things I generally want to be more on the bleeding edge on
     pkgs-unstable.claude-code
     pkgs-unstable.devenv
     pkgs-unstable.codex
+    pkgs-unstable.opencode
 
     # python
     python3
@@ -74,7 +78,6 @@
         ls = "eza";
         ll = "eza -l";
         la = "eza -la";
-        ws = "workstation";
         tf = "tofu";
         terraform = "tofu";
         tfi = "tofu init";
@@ -99,7 +102,7 @@
           "docker"
           "kubectl"
         ];
-        theme = "af-magic";
+        theme = "edvardm";
       };
       initContent = ''
         eval "$(devenv hook zsh)"

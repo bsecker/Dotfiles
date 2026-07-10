@@ -9,6 +9,5 @@ in
   _module.args = {
     inherit username homeDir;
     gitEmail = "benjamin.secker@gmail.com";
-    extraShellAliases = { };
   };
 }
