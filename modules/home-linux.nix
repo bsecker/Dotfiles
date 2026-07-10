@@ -23,5 +23,11 @@
     file.".config/nvim".source =
       config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/Dotfiles/nvim";
+
+    # Keep Niri's configuration writable outside the Nix store.
+    file.".config/niri".source =
+      config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/Dotfiles/niri";
+    file.".config/niri".force = true;
   };
 }
