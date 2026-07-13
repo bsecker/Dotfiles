@@ -1,0 +1,1 @@
+- never run `just` commands or `nix switch` commands without approval first

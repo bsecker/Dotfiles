@@ -13,6 +13,7 @@
     };
 
     packages = with pkgs; [
+      nerd-fonts.iosevka
       nerd-fonts.ubuntu-mono
       # signal-desktop # this causes issues with electron trying to rebuild from source, takes forever, don't bother
       # zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default # this doesn't really work with graphics accelleration on ubuntu without nixGL, so lets just skip it for now
@@ -29,5 +30,11 @@
       config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/Dotfiles/niri";
     file.".config/niri".force = true;
+
+    # Keep Waybar's configuration writable outside the Nix store.
+    file.".config/waybar".source =
+      config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/Dotfiles/waybar";
+    file.".config/waybar".force = true;
   };
 }

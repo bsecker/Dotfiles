@@ -1,0 +1,116 @@
+[
+  {
+    "height": 36,
+    "spacing": 5,
+    "modules-left": ["group/utilities", "group/workspaces"],
+    "modules-center": ["group/window"],
+    "modules-right": ["group/cpuram", "group/system"],
+
+    "custom/openbracket": {
+      "format": "[",
+      "tooltip": false
+    },
+    "custom/closebracket": {
+      "format": "]",
+      "tooltip": false
+    },
+    "custom/split": {
+      "format": "|",
+      "tooltip": false
+    },
+
+    "group/utilities": {
+      "orientation": "horizontal",
+      "modules": ["custom/openbracket", "custom/arch", "idle_inhibitor", "custom/split", "custom/powerprofile", "custom/closebracket"]
+    },
+    "custom/arch": {
+      "format": "󰣇",
+      "tooltip": false,
+      "on-click": "fuzzel"
+    },
+    "custom/powerprofile": {
+      "exec": "$HOME/Dotfiles/waybar/scripts/powerprofile.sh display",
+      "on-click": "$HOME/Dotfiles/waybar/scripts/powerprofile.sh toggle",
+      "interval": 5,
+      "tooltip": true,
+      "tooltip-format": "Power profile: {}"
+    },
+
+    "group/workspaces": {
+      "orientation": "horizontal",
+      "modules": ["custom/openbracket", "custom/niri-workspaces", "custom/closebracket"]
+    },
+    "custom/niri-workspaces": {
+      "exec": "$HOME/Dotfiles/waybar/scripts/niri_workspaces.sh",
+      "interval": 1,
+      "tooltip": false
+    },
+
+    "group/window": {
+      "orientation": "horizontal",
+      "modules": ["custom/openbracket", "custom/niri-window", "custom/closebracket"]
+    },
+    "custom/niri-window": {
+      "exec": "$HOME/Dotfiles/waybar/scripts/niri_window.sh",
+      "interval": 1,
+      "max-length": 20,
+      "tooltip": false
+    },
+
+    "group/cpuram": {
+      "orientation": "horizontal",
+      "modules": ["custom/openbracket", "cpu", "custom/split", "memory", "custom/closebracket"]
+    },
+    "cpu": {
+      "format": "CPU:{usage}%",
+      "tooltip": false,
+      "interval": 2,
+      "on-click": "~/.local/kitty.app/bin/kitty -e htop"
+    },
+    "memory": {
+      "format": "RAM:{}%",
+      "tooltip": false,
+      "interval": 2,
+      "on-click": "~/.local/kitty.app/bin/kitty -e htop"
+    },
+
+    "group/system": {
+      "orientation": "horizontal",
+      "modules": ["custom/openbracket", "wireplumber", "custom/split", "custom/network", "custom/bluetooth", "battery", "clock", "custom/closebracket"]
+    },
+    "clock": {
+      "format": "{:%I:%M}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "wireplumber": {
+      "scroll-step": 5,
+      "format": "{icon}{volume}%",
+      "format-muted": "󰖁",
+      "format-icons": ["  ", "  ", "  "],
+      "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+    "custom/network": {
+      "exec": "$HOME/Dotfiles/waybar/scripts/network_status.sh",
+      "interval": 5,
+      "tooltip": false,
+      "on-click": "~/.local/kitty.app/bin/kitty -e nmtui"
+    },
+    "custom/bluetooth": {
+      "format": "{}",
+      "exec": "$HOME/Dotfiles/waybar/scripts/bluetooth_status.sh",
+      "interval": 5,
+      "on-click": "blueman-manager"
+    },
+    "battery": {
+      "states": {
+        "warning": 30,
+        "critical": 15
+      },
+      "format": "{icon}  {capacity}%",
+      "format-full": "{icon}  {capacity}%",
+      "format-charging": "󰂄  {capacity}%",
+      "format-plugged": "  {capacity}%",
+      "format-icons": ["", "", "", "", ""]
+    }
+  }
+]
