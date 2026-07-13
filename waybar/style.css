@@ -73,6 +73,7 @@ button {
 /* menu pannel */
 #custom-arch,
 #custom-powerprofile,
+#custom-power,
 #custom-themeswitcher {
   padding-right: 10px;
   padding-left: 5px;
@@ -86,6 +87,10 @@ button {
 
 #custom-powerprofile:hover {
   color: @color1
+}
+
+#custom-power:hover {
+  color: @color1;
 }
 
 #custom-themeswitcher:hover {
@@ -152,6 +157,7 @@ button {
 #memory,
 #custom-clipboard,
 #custom-bluetooth,
+#backlight,
 #network {
   padding: 0 10px;
 }

@@ -35,6 +35,12 @@
       "tooltip": true,
       "tooltip-format": "Power profile: {}"
     },
+    "custom/power": {
+      "format": "⏻",
+      "tooltip": true,
+      "tooltip-format": "Power menu",
+      "on-click": "$HOME/Dotfiles/waybar/scripts/power_menu.sh"
+    },
 
     "group/workspaces": {
       "orientation": "horizontal",
@@ -76,7 +82,7 @@
 
     "group/system": {
       "orientation": "horizontal",
-      "modules": ["custom/openbracket", "wireplumber", "custom/split", "custom/network", "custom/bluetooth", "battery", "clock", "custom/closebracket"]
+      "modules": ["custom/openbracket", "wireplumber", "custom/split", "backlight", "custom/network", "custom/bluetooth", "battery", "clock", "custom/power", "custom/closebracket"]
     },
     "clock": {
       "format": "{:%I:%M}",
@@ -88,6 +94,13 @@
       "format-muted": "󰖁",
       "format-icons": ["  ", "  ", "  "],
       "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+    "backlight": {
+      "device": "intel_backlight",
+      "format": "{icon} {percent}%",
+      "format-icons": ["󰃞", "󰃟", "󰃠"],
+      "on-scroll-up": "brightnessctl --device=intel_backlight set +5%",
+      "on-scroll-down": "brightnessctl --device=intel_backlight set 5%-"
     },
     "custom/network": {
       "exec": "$HOME/Dotfiles/waybar/scripts/network_status.sh",

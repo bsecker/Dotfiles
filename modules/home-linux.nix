@@ -17,6 +17,7 @@
       nerd-fonts.ubuntu-mono
       # signal-desktop # this causes issues with electron trying to rebuild from source, takes forever, don't bother
       # zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default # this doesn't really work with graphics accelleration on ubuntu without nixGL, so lets just skip it for now
+      brightnessctl
     ];
 
     # copy nvim config

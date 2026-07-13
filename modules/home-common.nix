@@ -89,6 +89,7 @@
         lah = "ls -lah";
         cat = "bat";
         gloga = "git log --oneline --decorate --color --graph --all";
+        oc = "opencode";
       }
       // extraShellAliases;
 
