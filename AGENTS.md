@@ -1,1 +1,2 @@
 - never run `just` commands or `nix switch` commands without approval first
+- validate Niri configuration changes with `niri validate -c niri/config.kdl`

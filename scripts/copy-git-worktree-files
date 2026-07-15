@@ -1,0 +1,61 @@
+#!/bin/sh
+
+# Copy selected untracked or ignored files from a repository's main worktree
+# into the current linked worktree. Existing destination files are never
+# overwritten.
+#
+# Usage:
+#   copy-git-worktree-files <relative-path>...
+#
+# Example post-checkout hook:
+#   # A zero previous HEAD identifies a checkout made by git worktree add.
+#   case "$1" in
+#       ''|*[!0]*) exit 0 ;;
+#   esac
+#   /path/to/copy-git-worktree-files .env .envrc local-config.yaml
+
+set -eu
+
+if [ "$#" -eq 0 ]; then
+    printf >&2 'Usage: %s <relative-path>...\n' "${0##*/}"
+    exit 2
+fi
+
+for relative_path; do
+    case "$relative_path" in
+    '' | /* | .. | ../* | */.. | */../*)
+        printf >&2 'Path must be relative to the worktree and cannot contain ..: %s\n' "$relative_path"
+        exit 2
+        ;;
+    esac
+done
+
+worktree_root=$(git rev-parse --path-format=absolute --show-toplevel) || exit 1
+common_dir=$(git rev-parse --path-format=absolute --git-common-dir) || exit 1
+
+case "$common_dir" in
+*/.git) source_root=${common_dir%/.git} ;;
+*)
+    printf >&2 'Unable to locate the main worktree from %s\n' "$common_dir"
+    exit 1
+    ;;
+esac
+
+[ "$worktree_root" != "$source_root" ] || exit 0
+
+for relative_path; do
+    source_path=$source_root/$relative_path
+    destination_path=$worktree_root/$relative_path
+
+    if [ ! -f "$source_path" ]; then
+        printf >&2 'Skipping missing source file: %s\n' "$source_path"
+        continue
+    fi
+
+    if [ -e "$destination_path" ] || [ -L "$destination_path" ]; then
+        continue
+    fi
+
+    mkdir -p "${destination_path%/*}"
+    cp -p "$source_path" "$destination_path"
+done

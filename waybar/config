@@ -99,6 +99,7 @@
       "device": "intel_backlight",
       "format": "{icon} {percent}%",
       "format-icons": ["󰃞", "󰃟", "󰃠"],
+      "on-click": "$HOME/Dotfiles/waybar/scripts/brightness_picker.sh",
       "on-scroll-up": "brightnessctl --device=intel_backlight set +5%",
       "on-scroll-down": "brightnessctl --device=intel_backlight set 5%-"
     },

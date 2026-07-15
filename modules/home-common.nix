@@ -36,6 +36,7 @@
     pkgs-unstable.devenv
     pkgs-unstable.codex
     pkgs-unstable.opencode
+    pkgs-unstable.pi-coding-agent
 
     # python
     python3
@@ -51,6 +52,9 @@
   ];
 
   programs.home-manager.enable = true;
+
+  xdg.configFile."opencode/plugins/permission-logger.ts".source =
+    ../opencode/plugins/permission-logger.ts;
 
   programs.git = {
     enable = true;
