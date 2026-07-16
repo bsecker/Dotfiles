@@ -27,7 +27,7 @@
     };
 
     Service = {
-      ExecStart = "${pkgs.swayidle}/bin/swayidle -w timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' timeout 600 '${pkgs.swaylock}/bin/swaylock -f' before-sleep '${pkgs.swaylock}/bin/swaylock -f'";
+      ExecStart = "${pkgs.swayidle}/bin/swayidle -w timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' timeout 600 '/usr/bin/swaylock -f' before-sleep '/usr/bin/swaylock -f'";
       Restart = "on-failure";
     };
 
@@ -67,5 +67,11 @@
       config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/Dotfiles/waybar";
     file.".config/waybar".force = true;
+
+    # Use the version-controlled swaylock theme for every lock entry point.
+    file.".config/swaylock".source =
+      config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/Dotfiles/swaylock";
+    file.".config/swaylock".force = true;
   };
 }
