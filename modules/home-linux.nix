@@ -4,6 +4,36 @@
 
   fonts.fontconfig.enable = true;
 
+  systemd.user.services.swaybg = {
+    Unit = {
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+      Requisite = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.swaybg}/bin/swaybg -m fill -i %h/Dotfiles/wallpapers/2.jpg";
+      Restart = "on-failure";
+    };
+
+    Install.WantedBy = [ "niri.service" ];
+  };
+
+  systemd.user.services.swayidle = {
+    Unit = {
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+      Requisite = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.swayidle}/bin/swayidle -w timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' timeout 600 '${pkgs.swaylock}/bin/swaylock -f' before-sleep '${pkgs.swaylock}/bin/swaylock -f'";
+      Restart = "on-failure";
+    };
+
+    Install.WantedBy = [ "niri.service" ];
+  };
+
   # Linux-only home-manager config goes here (i3, polybar, picom, etc.)
   home = {
 
