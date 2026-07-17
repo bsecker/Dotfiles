@@ -94,6 +94,7 @@ output "eDP-1" {
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
     transform "normal"
+    position x=5632 y=0
 
     // Position of the output in the global coordinate space.
     // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
@@ -109,13 +110,13 @@ output "eDP-1" {
 output "DP-7" {
     mode "3840x2160@60.000"
     scale 1.25
-    position x=0 y=0
+    position x=2560 y=0
 }
 
-output "DP-5" {
+output "DP-8" {
     mode "3840x2160@60.000"
-    scale 1.25
-    position x=3072 y=0
+    scale 1.5
+    position x=0 y=0
 }
 
 // Settings that influence how windows are positioned and sized.

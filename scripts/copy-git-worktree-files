@@ -1,11 +1,12 @@
 #!/bin/sh
 
-# Copy selected untracked or ignored files from a repository's main worktree
+# Link selected untracked or ignored files from a repository's main worktree
 # into the current linked worktree. Existing destination files are never
-# overwritten.
+# overwritten. Symlinks are the default so edits are shared across worktrees.
 #
 # Usage:
 #   copy-git-worktree-files <relative-path>...
+#   copy-git-worktree-files --copy <relative-path>...
 #
 # Example post-checkout hook:
 #   # A zero previous HEAD identifies a checkout made by git worktree add.
@@ -13,11 +14,24 @@
 #       ''|*[!0]*) exit 0 ;;
 #   esac
 #   /path/to/copy-git-worktree-files .env .envrc local-config.yaml
+#
+# Use --copy when a worktree needs an independent copy of a file.
 
 set -eu
 
+mode=symlink
+case "${1-}" in
+--copy)
+    mode=copy
+    shift
+    ;;
+--)
+    shift
+    ;;
+esac
+
 if [ "$#" -eq 0 ]; then
-    printf >&2 'Usage: %s <relative-path>...\n' "${0##*/}"
+    printf >&2 'Usage: %s [--copy] <relative-path>...\n' "${0##*/}"
     exit 2
 fi
 
@@ -57,5 +71,8 @@ for relative_path; do
     fi
 
     mkdir -p "${destination_path%/*}"
-    cp -p "$source_path" "$destination_path"
+    case "$mode" in
+    copy) cp -p "$source_path" "$destination_path" ;;
+    symlink) ln -s "$source_path" "$destination_path" ;;
+    esac
 done

@@ -4,6 +4,7 @@
   username,
   homeDir,
   gitEmail,
+  config,
   extraShellAliases ? { },
   ...
 }:
@@ -11,6 +12,7 @@
   home.username = username;
   home.homeDirectory = homeDir;
   home.stateVersion = "25.11";
+  home.sessionPath = [ "$HOME/.local/bin" ];
 
   home.packages = with pkgs; [
     # shell tools
@@ -30,6 +32,7 @@
     gnumake
     htop
     dive
+    git-town
 
     # things I generally want to be more on the bleeding edge on
     pkgs-unstable.claude-code
@@ -53,8 +56,18 @@
 
   programs.home-manager.enable = true;
 
-  xdg.configFile."opencode/plugins/permission-logger.ts".source =
-    ../opencode/plugins/permission-logger.ts;
+  xdg.configFile."opencode" = {
+    source = ../opencode;
+    recursive = true;
+  };
+
+  # Keep Pi configuration live: edits take effect after Pi's /reload without
+  # rebuilding or re-applying Home Manager.
+  home.file.".pi/agent/extensions".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dotfiles/pi/extensions";
+  # Free Shift+Tab from Pi's thinking-level shortcut for the plan/build toggle.
+  home.file.".pi/agent/keybindings.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dotfiles/pi/keybindings.json";
 
   programs.git = {
     enable = true;
@@ -111,6 +124,29 @@
       };
       initContent = ''
         eval "$(devenv hook zsh)"
+
+        # Jump to a worktree by branch name.
+        wt() {
+          local selection dir branch
+          selection=$(git worktree list --porcelain \
+            | awk '
+                /^worktree / { dir = substr($0, 10) }
+                /^branch / {
+                  branch = substr($0, 8)
+                  sub("refs/heads/", "", branch)
+                  print dir "\t" branch
+                }
+              ' \
+            | fzf --query="$1" --with-nth=2.. --delimiter=$'\t') || return
+          IFS=$'\t' read -r dir branch <<< "$selection"
+          if [ -n "$dir" ]; then
+            cd "$dir" || return
+            echo "Switched to worktree: $dir (branch: $branch)"
+          else
+            echo "No worktree found"
+            return 1
+          fi
+        }
       '';
     };
   };

@@ -12,7 +12,7 @@
     };
 
     Service = {
-      ExecStart = "${pkgs.swaybg}/bin/swaybg -m fill -i %h/Dotfiles/wallpapers/2.jpg";
+      ExecStart = "${pkgs.swaybg}/bin/swaybg -m fill -i %h/Dotfiles/wallpapers/6.jpg";
       Restart = "on-failure";
     };
 
