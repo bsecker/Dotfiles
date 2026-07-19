@@ -1,53 +1,28 @@
 { pkgs, config, ... }:
+
+let
+  mkNiriService = command: {
+    Unit = {
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+      Requisite = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = command;
+      Restart = "on-failure";
+    };
+
+    Install.WantedBy = [ "niri.service" ];
+  };
+in
 {
   imports = [ ./home-common.nix ];
 
   fonts.fontconfig.enable = true;
-
-  systemd.user.services.swaybg = {
-    Unit = {
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
-      Requisite = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.swaybg}/bin/swaybg -m fill -i %h/Dotfiles/wallpapers/6.jpg";
-      Restart = "on-failure";
-    };
-
-    Install.WantedBy = [ "niri.service" ];
-  };
-
-  systemd.user.services.swayidle = {
-    Unit = {
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
-      Requisite = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.swayidle}/bin/swayidle -w timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' timeout 600 '/usr/bin/swaylock -f' before-sleep '/usr/bin/swaylock -f'";
-      Restart = "on-failure";
-    };
-
-    Install.WantedBy = [ "niri.service" ];
-  };
-
-  systemd.user.services.wlsunset = {
-    Unit = {
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
-      Requisite = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.wlsunset}/bin/wlsunset -t 3500 -s 19:00";
-      Restart = "on-failure";
-    };
-
-    Install.WantedBy = [ "niri.service" ];
-  };
+  systemd.user.services.swaybg = mkNiriService "${pkgs.swaybg}/bin/swaybg -m fill -i %h/Dotfiles/wallpapers/6.jpg";
+  systemd.user.services.wlsunset = mkNiriService "${pkgs.wlsunset}/bin/wlsunset -t 3500 -s 19:00";
+  systemd.user.services.swayidle = mkNiriService "${pkgs.swayidle}/bin/swayidle -w timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' timeout 600 '/usr/bin/swaylock -f' before-sleep '/usr/bin/swaylock -f'";
 
   # Linux-only home-manager config goes here (i3, polybar, picom, etc.)
   home = {

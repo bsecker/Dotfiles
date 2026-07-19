@@ -12,3 +12,11 @@ desktop:
 
 update:
     nix flake update
+
+# build and show diff
+builddiff flake:
+    home-manager build --flake {{ flake }}
+    nix store diff-closures \
+        "$HOME/.local/state/nix/profiles/home-manager" \
+        ./result
+    rm -f ./result

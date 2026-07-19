@@ -32,6 +32,7 @@
     direnv
     gnumake
     htop
+    btop # kind of nice but idk
     dive
     git-town
 
