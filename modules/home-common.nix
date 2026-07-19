@@ -13,6 +13,7 @@
   home.homeDirectory = homeDir;
   home.stateVersion = "25.11";
   home.sessionPath = [ "$HOME/.local/bin" ];
+  home.sessionVariables.SUDO_PROMPT = builtins.readFile ../sudoers.lecture;
 
   home.packages = with pkgs; [
     # shell tools
@@ -59,6 +60,7 @@
   xdg.configFile."opencode" = {
     source = ../opencode;
     recursive = true;
+    force = true;
   };
 
   # Keep Pi configuration live: edits take effect after Pi's /reload without
@@ -107,6 +109,8 @@
         cat = "bat";
         gloga = "git log --oneline --decorate --color --graph --all";
         oc = "opencode";
+        gt = "git town";
+        charging = "watch -n 0.1 upower -i $(upower -e | grep BAT)";
       }
       // extraShellAliases;
 

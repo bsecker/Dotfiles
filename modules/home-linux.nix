@@ -34,6 +34,21 @@
     Install.WantedBy = [ "niri.service" ];
   };
 
+  systemd.user.services.wlsunset = {
+    Unit = {
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+      Requisite = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.wlsunset}/bin/wlsunset -t 3500 -s 19:00";
+      Restart = "on-failure";
+    };
+
+    Install.WantedBy = [ "niri.service" ];
+  };
+
   # Linux-only home-manager config goes here (i3, polybar, picom, etc.)
   home = {
 
@@ -48,6 +63,7 @@
       # signal-desktop # this causes issues with electron trying to rebuild from source, takes forever, don't bother
       # zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default # this doesn't really work with graphics accelleration on ubuntu without nixGL, so lets just skip it for now
       brightnessctl
+      wlsunset
     ];
 
     # copy nvim config

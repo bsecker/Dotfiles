@@ -67,7 +67,7 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -94,7 +94,7 @@ output "eDP-1" {
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
     transform "normal"
-    position x=5632 y=0
+    position x=6144 y=0
 
     // Position of the output in the global coordinate space.
     // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
@@ -107,16 +107,23 @@ output "eDP-1" {
     // automatically.
 }
 
-output "DP-7" {
+output "Dell Inc. DELL S2725QS 1H5P364" {
     mode "3840x2160@60.000"
     scale 1.25
-    position x=2560 y=0
+    position x=0 y=0
 }
 
-output "DP-8" {
+output "Dell Inc. DELL S2725QS DZBL364" {
     mode "3840x2160@60.000"
-    scale 1.5
-    position x=0 y=0
+    scale 1.25
+    position x=3072 y=0
+}
+
+// Athene's Desktop monitor.
+// Honestly not a huge fan of 1440p anymore for office work, 4k has ruined me
+output "Philips Consumer Electronics Company PHL 346E2C UK02522036043" {
+    mode "3440x1440@100.000"
+    scale 1
 }
 
 // Settings that influence how windows are positioned and sized.
