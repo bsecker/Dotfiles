@@ -5,7 +5,18 @@ home:
     sudo darwin-rebuild switch --flake .#Benjamin-Laptop-Home
 
 work:
-    sudo darwin-rebuild switch --flake .#Benjamins-MacBook-Pro
+    home-manager switch --flake .#benjamin@linux-cdds-laptop
 
 desktop:
     home-manager switch --flake .#benjamin@linux-desktop
+
+update:
+    nix flake update
+
+# build and show diff
+builddiff flake:
+    home-manager build --flake {{ flake }}
+    nix store diff-closures \
+        "$HOME/.local/state/nix/profiles/home-manager" \
+        ./result
+    rm -f ./result

@@ -1,4 +1,8 @@
 { config, ... }:
+let
+  dotfiles = "/etc/nix-darwin";
+  link = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
+in
 {
   imports = [ ./home-common.nix ];
 
@@ -9,12 +13,16 @@
     fi
   '';
 
-  # out of store symlinks so that we can make edits to the file from cmux and it comes up in repo
-  # cmux settings
-  xdg.configFile."cmux/cmux.json".source =
-    config.lib.file.mkOutOfStoreSymlink "/etc/nix-darwin/.config/cmux/cmux.json";
+  # Cmux saves edits directly to this configuration file.
+  xdg.configFile."cmux/cmux.json".source = link "xdg/cmux/cmux.json";
+  xdg.configFile."ghostty/config".source = ../xdg/ghostty/config;
+
+  # Keep Pi configuration live: edits take effect after Pi's /reload without
+  # rebuilding or re-applying Home Manager.
+  home.file.".pi/agent/extensions".source = link "pi/extensions";
+  # Free Shift+Tab from Pi's thinking-level shortcut for the plan/build toggle.
+  home.file.".pi/agent/keybindings.json".source = link "pi/keybindings.json";
 
   # AeroSpace config
-  home.file.".aerospace.toml".source =
-    config.lib.file.mkOutOfStoreSymlink "/etc/nix-darwin/.aerospace.toml";
+  home.file.".aerospace.toml".source = link ".aerospace.toml";
 }

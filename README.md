@@ -58,7 +58,11 @@ sudo nix --extra-experimental-features 'nix-command flakes' run nix-darwin/nix-d
 linux
 
 - [x] fix nerd fonts not applying
-- [ ] install i3 or equivalent
+- [x] install i3 or equivalent
+
+## Remember
+
+- `nmtui` to edit wifi in niri
 
 ## Things to look into
 

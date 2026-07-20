@@ -1,0 +1,11 @@
+# Moonlander hyperkeys - switch pane
+keybind = ctrl+opt+cmd+left=goto_split:left
+keybind = ctrl+opt+cmd+right=goto_split:right
+keybind = ctrl+opt+cmd+up=goto_split:up
+keybind = ctrl+opt+cmd+down=goto_split:down
+
+# Add shift to resize pane
+keybind = ctrl+opt+cmd+shift+left=resize_split:left,10
+keybind = ctrl+opt+cmd+shift+right=resize_split:right,10
+keybind = ctrl+opt+cmd+shift+up=resize_split:up,10
+keybind = ctrl+opt+cmd+shift+down=resize_split:down,10

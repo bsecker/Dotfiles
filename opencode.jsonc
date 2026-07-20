@@ -1,0 +1,42 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "read": {
+      "*": "allow",
+      ".env": "ask",
+      ".env.*": "ask",
+      ".env.example": "allow",
+      "secrets/**": "ask",
+      "~/.ssh/**": "ask",
+      "~/.aws/**": "ask"
+    },
+    "edit": {
+      "*": "ask",
+    },
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "bash": {
+      // Ask by default
+      "*": "ask",
+
+      // Allow by default
+      "ls *": "allow",
+      "git status *": "allow",
+      "git diff *": "allow",
+      "git log *": "allow",
+      "git show *": "allow",
+      "git ls-files": "allow",
+      "git check-ignore *": "allow",
+
+      "head *": "allow",
+      "tail *": "allow",
+      "echo *": "allow",
+      "jq *": "allow",
+      "grep *": "allow",
+      "rg *": "allow",
+      "sleep *": "allow",
+
+    }
+  },
+}
