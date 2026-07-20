@@ -29,7 +29,8 @@
     wget
     ranger
     direnv
-    
+    kubectx
+
     # python
     python3
     uv
