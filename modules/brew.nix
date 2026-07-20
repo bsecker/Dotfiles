@@ -11,8 +11,6 @@
       "tailscale"
       "homerow"
       "zen"
-      "aerospace"
-      "omniwm"
     ] ++ extraBrewCasks;
     brews = [ "htop" ] ++ extraBrewFormulas;
   };
