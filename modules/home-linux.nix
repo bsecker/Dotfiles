@@ -1,6 +1,8 @@
 { pkgs, config, ... }:
 
 let
+  dotfiles = "${config.home.homeDirectory}/Dotfiles";
+  link = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
   mkNiriService = command: {
     Unit = {
       PartOf = [ "graphical-session.target" ];
@@ -41,28 +43,24 @@ in
       wlsunset
     ];
 
-    # copy nvim config
-    # file.".config/nvim".source = ../nvim; # direct symlinks don't work when lazyvim wants to write files, lets do an out of store symlink
-    file.".config/nvim".source =
-      config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/Dotfiles/nvim";
-
-    # Keep Niri's configuration writable outside the Nix store.
-    file.".config/niri".source =
-      config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/Dotfiles/niri";
-    file.".config/niri".force = true;
-
-    # Keep Waybar's configuration writable outside the Nix store.
-    file.".config/waybar".source =
-      config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/Dotfiles/waybar";
-    file.".config/waybar".force = true;
-
-    # Use the version-controlled swaylock theme for every lock entry point.
-    file.".config/swaylock".source =
-      config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/Dotfiles/swaylock";
-    file.".config/swaylock".force = true;
+    # Keep Pi configuration live: edits take effect after Pi's /reload without
+    # rebuilding or re-applying Home Manager.
+    file.".pi/agent/extensions".source = link "pi/extensions";
+    # Free Shift+Tab from Pi's thinking-level shortcut for the plan/build toggle.
+    file.".pi/agent/keybindings.json".source = link "pi/keybindings.json";
   };
+
+  # LazyVim writes part of its configuration at runtime.
+  xdg.configFile."nvim".source = link "xdg/nvim";
+
+  # Keep Niri's configuration writable outside the Nix store.
+  xdg.configFile."niri".source = link "xdg/niri";
+  xdg.configFile."niri".force = true;
+
+  # Keep Waybar's configuration writable outside the Nix store.
+  xdg.configFile."waybar".source = link "xdg/waybar";
+  xdg.configFile."waybar".force = true;
+
+  # Swaylock does not modify its configuration at runtime.
+  xdg.configFile."swaylock".source = ../xdg/swaylock;
 }

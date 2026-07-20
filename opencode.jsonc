@@ -26,6 +26,8 @@
       "git diff *": "allow",
       "git log *": "allow",
       "git show *": "allow",
+      "git ls-files": "allow",
+      "git check-ignore *": "allow",
 
       "head *": "allow",
       "tail *": "allow",

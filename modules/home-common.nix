@@ -47,7 +47,6 @@
     python3
     uv
 
-
     # neovim and stuff
     tree-sitter
     neovim
@@ -59,18 +58,10 @@
   programs.home-manager.enable = true;
 
   xdg.configFile."opencode" = {
-    source = ../opencode;
+    source = ../xdg/opencode;
     recursive = true;
     force = true;
   };
-
-  # Keep Pi configuration live: edits take effect after Pi's /reload without
-  # rebuilding or re-applying Home Manager.
-  home.file.".pi/agent/extensions".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dotfiles/pi/extensions";
-  # Free Shift+Tab from Pi's thinking-level shortcut for the plan/build toggle.
-  home.file.".pi/agent/keybindings.json".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dotfiles/pi/keybindings.json";
 
   programs.git = {
     enable = true;

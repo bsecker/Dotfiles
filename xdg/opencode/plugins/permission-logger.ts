@@ -2,7 +2,11 @@ import { appendFileSync, mkdirSync, existsSync } from "fs"
 import { join, dirname } from "path"
 import { homedir } from "os"
 
-const LOG_FILE = join(homedir(), ".config", "opencode", "permission-log.jsonl")
+const LOG_FILE = join(
+  process.env.XDG_STATE_HOME || join(homedir(), ".local", "state"),
+  "opencode",
+  "permission-log.jsonl",
+)
 
 export const PermissionLogger = async () => {
   const logDir = dirname(LOG_FILE)

@@ -29,8 +29,8 @@
       "on-click": "fuzzel"
     },
     "custom/powerprofile": {
-      "exec": "$HOME/Dotfiles/waybar/scripts/powerprofile.sh display",
-      "on-click": "$HOME/Dotfiles/waybar/scripts/powerprofile.sh toggle",
+      "exec": "$HOME/Dotfiles/xdg/waybar/scripts/powerprofile.sh display",
+      "on-click": "$HOME/Dotfiles/xdg/waybar/scripts/powerprofile.sh toggle",
       "interval": 5,
       "tooltip": true,
       "tooltip-format": "Power profile: {}"
@@ -39,7 +39,7 @@
       "format": "⏻",
       "tooltip": true,
       "tooltip-format": "Power menu",
-      "on-click": "$HOME/Dotfiles/waybar/scripts/power_menu.sh"
+      "on-click": "$HOME/Dotfiles/xdg/waybar/scripts/power_menu.sh"
     },
 
     "group/workspaces": {
@@ -47,7 +47,7 @@
       "modules": ["custom/openbracket", "custom/niri-workspaces", "custom/closebracket"]
     },
     "custom/niri-workspaces": {
-      "exec": "$HOME/Dotfiles/waybar/scripts/niri_workspaces.sh",
+      "exec": "$HOME/Dotfiles/xdg/waybar/scripts/niri_workspaces.sh",
       "interval": 1,
       "tooltip": false
     },
@@ -57,7 +57,7 @@
       "modules": ["custom/openbracket", "custom/niri-window", "custom/closebracket"]
     },
     "custom/niri-window": {
-      "exec": "$HOME/Dotfiles/waybar/scripts/niri_window.sh",
+      "exec": "$HOME/Dotfiles/xdg/waybar/scripts/niri_window.sh",
       "interval": 1,
       "max-length": 20,
       "tooltip": false
@@ -99,19 +99,19 @@
       "device": "intel_backlight",
       "format": "{icon} {percent}%",
       "format-icons": ["󰃞", "󰃟", "󰃠"],
-      "on-click": "$HOME/Dotfiles/waybar/scripts/brightness_picker.sh",
+      "on-click": "$HOME/Dotfiles/xdg/waybar/scripts/brightness_picker.sh",
       "on-scroll-up": "brightnessctl --device=intel_backlight set +5%",
       "on-scroll-down": "brightnessctl --device=intel_backlight set 5%-"
     },
     "custom/network": {
-      "exec": "$HOME/Dotfiles/waybar/scripts/network_status.sh",
+      "exec": "$HOME/Dotfiles/xdg/waybar/scripts/network_status.sh",
       "interval": 5,
       "tooltip": false,
       "on-click": "~/.local/kitty.app/bin/kitty -e nmtui"
     },
     "custom/bluetooth": {
       "format": "{}",
-      "exec": "$HOME/Dotfiles/waybar/scripts/bluetooth_status.sh",
+      "exec": "$HOME/Dotfiles/xdg/waybar/scripts/bluetooth_status.sh",
       "interval": 5,
       "on-click": "blueman-manager"
     },
