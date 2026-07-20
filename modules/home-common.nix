@@ -121,21 +121,34 @@
       initContent = ''
         eval "$(devenv hook zsh)"
 
-        # Jump to a worktree by branch name.
+        # Jump to a worktree by branch name, or create a new one.
         wt() {
-          local selection dir branch
-          selection=$(git worktree list --porcelain \
-            | awk '
-                /^worktree / { dir = substr($0, 10) }
-                /^branch / {
-                  branch = substr($0, 8)
-                  sub("refs/heads/", "", branch)
-                  print dir "\t" branch
-                }
-              ' \
-            | fzf --query="$1" --with-nth=2.. --delimiter=$'\t') || return
+          local selection dir branch repo_root worktree_dir
+          selection=$(
+            {
+              printf '__new_worktree__\tnew worktree\n'
+              git worktree list --porcelain \
+                | awk '
+                    /^worktree / { dir = substr($0, 10) }
+                    /^branch / {
+                      branch = substr($0, 8)
+                      sub("refs/heads/", "", branch)
+                      print dir "\t" branch
+                    }
+                  '
+            } | fzf --query="$1" --with-nth=2.. --delimiter=$'\t'
+          ) || return
           IFS=$'\t' read -r dir branch <<< "$selection"
-          if [ -n "$dir" ]; then
+
+          if [ "$dir" = '__new_worktree__' ]; then
+            read -r "branch?New worktree name/branch: " || return
+            [ -n "$branch" ] || return
+            repo_root=$(git rev-parse --show-toplevel) || return
+            worktree_dir="$(dirname "$repo_root")/$branch"
+            git worktree add "$worktree_dir" -b "$branch" || return
+            cd "$worktree_dir" || return
+            echo "Created and switched to worktree: $worktree_dir (branch: $branch)"
+          elif [ -n "$dir" ]; then
             cd "$dir" || return
             echo "Switched to worktree: $dir (branch: $branch)"
           else

@@ -1,5 +1,4 @@
 import type { ExtensionAPI, ExtensionContext, Theme } from "@earendil-works/pi-coding-agent";
-import { truncateToWidth, visibleWidth, type TUI } from "@earendil-works/pi-tui";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
@@ -125,62 +124,39 @@ async function writeCachedUsage(state: SidebarState): Promise<void> {
 	}
 }
 
-class Sidebar {
-	constructor(
-		private readonly state: SidebarState,
-		private readonly theme: Theme,
-		private readonly tui: TUI,
-	) {}
-
-	render(width: number): string[] {
-		const inner = Math.max(1, width - 2);
-		const border = (text: string) => this.theme.fg("borderMuted", text);
-		const pad = (text: string) => {
-			const clipped = truncateToWidth(text, inner);
-			return clipped + " ".repeat(Math.max(0, inner - visibleWidth(clipped)));
-		};
-		const row = (text = "") => border("│") + pad(text) + border("│");
-		const title = (text: string) => this.theme.fg("accent", this.theme.bold(text));
-		const dim = (text: string) => this.theme.fg("dim", text);
-		const lines = [border(`╭${"─".repeat(inner)}╮`), row(` ${title("pi sidebar")}`)];
-
-		lines.push(row(), row(` ${title("Directory")}`), row(` ${dim(truncateToWidth(this.state.cwd, Math.max(1, inner - 1)))}`));
-		lines.push(row(), row(` ${title("Context")}`));
-		const context = this.state.contextWindow
-			? `${formatTokens(this.state.contextTokens)} / ${formatTokens(this.state.contextWindow)}${this.state.contextPercent === null ? "" : ` (${this.state.contextPercent.toFixed(1)}%)`}`
-			: "unavailable";
-		lines.push(row(` ${context}`));
-		if (this.state.model) lines.push(row(` ${dim(truncateToWidth(this.state.model, Math.max(1, inner - 1)))}`));
-
-		lines.push(row(), row(` ${title("Codex limits")}`));
-		if (this.state.plan) lines.push(row(` ${dim(truncateToWidth(this.state.plan, Math.max(1, inner - 1)))}`));
-		if (this.state.user) lines.push(row(` ${dim(truncateToWidth(this.state.user, Math.max(1, inner - 1)))}`));
-		if (this.state.limits.length > 0) {
-			for (const limit of this.state.limits) {
-				const reset = limit.resetAt ? ` · ${formatDuration(Math.ceil((limit.resetAt - Date.now()) / 1_000))}` : "";
-				const color = limit.usedPercent >= 90 ? "error" : limit.usedPercent >= 70 ? "warning" : "success";
-				lines.push(row(` ${limit.label}  ${this.theme.fg(color, `${limit.usedPercent}%`)}${dim(reset)}`));
-			}
-		} else {
-			lines.push(row(` ${dim(this.state.usageError ?? "Not signed in to Codex")}`));
-		}
-		const updated = this.state.fetchedAt
-			? `${formatDuration(Math.ceil((Date.now() - this.state.fetchedAt) / 1_000))} ago`
-			: "loading…";
-		// Fill the viewport so the overlay's border reaches the terminal bottom.
-		const targetHeight = Math.max(lines.length + 2, this.tui.terminal.rows);
-		while (lines.length < targetHeight - 2) lines.push(row());
-		lines.push(row(" " + dim(`updated ${updated}`)), border(`╰${"─".repeat(inner)}╯`));
-		return lines.map((line) => truncateToWidth(line, width, ""));
-	}
-
-	invalidate(): void {}
+function formatStatus(state: SidebarState, theme: Theme): string {
+	const dim = (text: string) => theme.fg("dim", text);
+	const context = state.contextWindow
+		? `${formatTokens(state.contextTokens)}/${formatTokens(state.contextWindow)}${state.contextPercent === null ? "" : ` ${state.contextPercent.toFixed(1)}%`}`
+		: "unavailable";
+	const limits = state.limits.length > 0
+		? state.limits.map((limit) => {
+			const color = limit.usedPercent >= 90 ? "error" : limit.usedPercent >= 70 ? "warning" : "success";
+			const reset = limit.resetAt ? ` ${formatDuration(Math.ceil((limit.resetAt - Date.now()) / 1_000))}` : "";
+			return `${limit.label} ${theme.fg(color, `${limit.usedPercent}%`)}${dim(reset)}`;
+		})
+		: [dim(state.usageError ?? "Codex unavailable")];
+	const updated = state.fetchedAt
+		? `updated ${formatDuration(Math.ceil((Date.now() - state.fetchedAt) / 1_000))} ago`
+		: "loading";
+	return [
+		theme.fg("accent", theme.bold("pi")),
+		state.model ? dim(state.model) : undefined,
+		`ctx ${context}`,
+		...limits,
+		dim(updated),
+	]
+		.filter((part): part is string => part !== undefined)
+		.join(dim(" | "));
 }
 
 export default function (pi: ExtensionAPI) {
 	let refreshTimer: ReturnType<typeof setInterval> | undefined;
-	let requestRender: (() => void) | undefined;
 	let state: SidebarState | undefined;
+
+	const updateStatus = (ctx: ExtensionContext) => {
+		if (state) ctx.ui.setStatus("persistent-sidebar", formatStatus(state, ctx.ui.theme));
+	};
 
 	const updateContext = (ctx: ExtensionContext) => {
 		if (!state) return;
@@ -190,7 +166,7 @@ export default function (pi: ExtensionAPI) {
 		state.contextTokens = usage?.tokens ?? null;
 		state.contextWindow = usage?.contextWindow ?? ctx.model?.contextWindow;
 		state.contextPercent = usage?.percent ?? null;
-		requestRender?.();
+		updateStatus(ctx);
 	};
 
 	const refreshUsage = async (ctx: ExtensionContext) => {
@@ -213,7 +189,7 @@ export default function (pi: ExtensionAPI) {
 		} catch (error) {
 			state.usageError = error instanceof Error ? error.message : "Could not load Codex limits";
 		}
-		requestRender?.();
+		updateStatus(ctx);
 	};
 
 	pi.on("session_start", async (_event, ctx) => {
@@ -226,18 +202,6 @@ export default function (pi: ExtensionAPI) {
 			...(await readCachedUsage()),
 		};
 		updateContext(ctx);
-		void ctx.ui
-			.custom<void>(
-			(tui, theme, _keybindings, _done) => {
-				requestRender = () => tui.requestRender();
-				return new Sidebar(state!, theme, tui);
-			},
-			{
-				overlay: true,
-				overlayOptions: { anchor: "top-right", width: 34, margin: 0, nonCapturing: true, visible: (w) => w >= 100 },
-			}, 
-			)
-			.catch(() => undefined);
 		void refreshUsage(ctx);
 		refreshTimer = setInterval(() => void refreshUsage(ctx), REFRESH_MS);
 	});
@@ -254,10 +218,10 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
-	pi.on("session_shutdown", () => {
+	pi.on("session_shutdown", (_event, ctx) => {
+		ctx.ui.setStatus("persistent-sidebar", undefined);
 		if (refreshTimer) clearInterval(refreshTimer);
 		refreshTimer = undefined;
-		requestRender = undefined;
 		state = undefined;
 	});
 }
