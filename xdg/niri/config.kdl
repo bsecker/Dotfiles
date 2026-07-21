@@ -384,8 +384,8 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     // for some reason kitty is only installed here not globally
-    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "~/.local/kitty.app/bin/kitty"; }
-    Mod+Shift+Return hotkey-overlay-title="Open a Terminal stacked in the current column: kitty" { spawn-sh "~/.local/kitty.app/bin/kitty & sleep 0.3; niri msg action focus-window-previous; niri msg action consume-window-into-column; niri msg action focus-window-bottom"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn-sh "if [ \"$(hostname)\" = ben-cdds ]; then exec ~/.local/kitty.app/bin/kitty --directory ~/Work/cdds_ws; else exec ~/.local/kitty.app/bin/kitty; fi"; }
+    Mod+Shift+Return hotkey-overlay-title="Open a Terminal stacked in the current column: kitty" { spawn-sh "if [ \"$(hostname)\" = ben-cdds ]; then ~/.local/kitty.app/bin/kitty --directory ~/Work/cdds_ws; else ~/.local/kitty.app/bin/kitty; fi & sleep 0.3; niri msg action focus-window-previous; niri msg action consume-window-into-column; niri msg action focus-window-bottom"; }
     Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
