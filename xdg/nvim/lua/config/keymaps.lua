@@ -7,3 +7,5 @@ vim.keymap.set("n", "<C-Left>", "<C-h>", { desc = "Go to Left Window", remap = t
 vim.keymap.set("n", "<C-Down>", "<C-j>", { desc = "Go to Lower Window", remap = true })
 vim.keymap.set("n", "<C-Up>", "<C-k>", { desc = "Go to Upper Window", remap = true })
 vim.keymap.set("n", "<C-Right>", "<C-l>", { desc = "Go to Right Window", remap = true })
+
+vim.keymap.set("n", "<leader>gH", require("config.github").copy_permalink, { desc = "Copy GitHub permalink" })
