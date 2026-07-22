@@ -85,7 +85,7 @@
       "modules": ["custom/openbracket", "wireplumber", "custom/split", "backlight", "custom/network", "custom/bluetooth", "battery", "clock", "custom/power", "custom/closebracket"]
     },
     "clock": {
-      "format": "{:%I:%M}",
+      "format": "{:%Y/%m/%d %H:%M}",
       "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "wireplumber": {
