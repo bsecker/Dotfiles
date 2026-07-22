@@ -61,6 +61,8 @@ in
   xdg.configFile."waybar".source = link "xdg/waybar";
   xdg.configFile."waybar".force = true;
 
+  xdg.configFile."mako".source = link "xdg/mako";
+
   # Swaylock does not modify its configuration at runtime.
   xdg.configFile."swaylock".source = ../xdg/swaylock;
 }

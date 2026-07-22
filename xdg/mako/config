@@ -1,0 +1,2 @@
+# Milliseconds before ordinary notifications expire.
+default-timeout=10000
