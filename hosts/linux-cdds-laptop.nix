@@ -16,13 +16,27 @@ in
   };
 
   programs.zsh.initContent = lib.mkAfter ''
-    jira() {
-      local issue_id
+    show() {
+      local issue_id commit pr_url
       if [[ "$*" =~ '(CD-[0-9]+)' ]]; then
         issue_id="''${match[1]}"
         xdg-open "https://patrikcd.atlassian.net/browse/$issue_id"
+      elif [[ "$*" =~ '(^|[^[:alnum:]])([0-9a-fA-F]{7,40})($|[^[:alnum:]])' ]]; then
+        commit="''${match[2]}"
+        if git rev-parse --verify --quiet "$commit^{commit}" >/dev/null; then
+          pr_url=$(gh api "repos/{owner}/{repo}/commits/$commit/pulls" --jq '.[0].html_url') || return
+          if [[ -n "$pr_url" ]]; then
+            xdg-open "$pr_url"
+          else
+            print -u2 "No pull request found for commit: $commit"
+            return 1
+          fi
+        else
+          print -u2 "Commit not found in the current repository: $commit"
+          return 1
+        fi
       else
-        print -u2 "Usage: jira <text containing CD-1234>"
+        print -u2 "Usage: show <text containing CD-1234 or a git commit hash>"
         return 1
       fi
     }
