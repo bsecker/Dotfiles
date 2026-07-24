@@ -1,0 +1,15 @@
+githubRepoOwner: bsecker
+githubRepoName: Dotfiles
+githubHost: github.com
+githubRemote: origin
+githubBranch: main
+requireChecks: true
+requiredChecks: []
+requireApproval: true
+defaultReviewers: []
+mergeMethod: rebase
+mergeQueue: false
+prTemplateType: stack
+forceFetchTags: false
+showPrTitlesInStack: false
+branchPushIndividually: false

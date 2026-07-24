@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgs-unstable,
+  spr,
   username,
   homeDir,
   gitEmail,
@@ -43,6 +44,7 @@
     pkgs-unstable.codex
     pkgs-unstable.opencode
     pkgs-unstable.pi-coding-agent
+    spr.packages.${pkgs.system}.default
 
     # python
     python3
@@ -74,6 +76,11 @@
       };
       push.autoSetupRemote = true;
     };
+  };
+
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
   };
 
   programs = {
