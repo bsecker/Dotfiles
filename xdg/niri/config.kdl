@@ -94,7 +94,7 @@ output "eDP-1" {
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
     transform "normal"
-    position x=6144 y=0
+    position x=0 y=0
 
     // Position of the output in the global coordinate space.
     // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
@@ -114,7 +114,7 @@ output "Dell Inc. DELL S2725QS 1H5P364" {
 }
 
 output "Dell Inc. DELL S2725QS DZBL364" {
-    mode "3840x2160@60.000"
+    mode "3840x2160@120.000"
     scale 1.25
     position x=3072 y=0
 }
@@ -124,6 +124,17 @@ output "Dell Inc. DELL S2725QS DZBL364" {
 output "Philips Consumer Electronics Company PHL 346E2C UK02522036043" {
     mode "3440x1440@100.000"
     scale 1
+}
+
+output "Samsung Electric Company LS49AG95 HNTW500047" {
+    mode "5120x1440@143.979"
+    scale 1
+    position x=2304 y=0
+}
+
+// Avoid Intel-to-NVIDIA scanout buffer allocation failures on external outputs.
+debug {
+    render-drm-device "/dev/dri/by-path/pci-0000:01:00.0-render"
 }
 
 // Settings that influence how windows are positioned and sized.

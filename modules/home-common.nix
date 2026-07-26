@@ -59,6 +59,7 @@
   ];
 
   programs.home-manager.enable = true;
+  programs.direnv.enable = true;
 
   xdg.configFile."opencode" = {
     source = ../xdg/opencode;

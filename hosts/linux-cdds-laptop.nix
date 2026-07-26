@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 let
   username = "benjamin";
   homeDir = "/home/${username}";
@@ -12,6 +12,7 @@ in
     extraShellAliases = {
       ws = "cd ~/Work/cdds_ws";
       notes = "cd ~/Work/cdds_notes";
+      dot = "cd ~/Dotfiles";
     };
   };
 
@@ -41,4 +42,6 @@ in
       fi
     }
   '';
+
+  home.packages = [ pkgs._1password-gui ];
 }
