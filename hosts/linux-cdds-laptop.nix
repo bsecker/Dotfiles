@@ -13,6 +13,7 @@ in
       ws = "cd ~/Work/cdds_ws";
       notes = "cd ~/Work/cdds_notes";
       dot = "cd ~/Dotfiles";
+      amend = "git commit --amend --no-edit";
     };
   };
 

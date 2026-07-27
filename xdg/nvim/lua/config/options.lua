@@ -4,3 +4,5 @@
 
 -- Keep explicit formatting available, but never format as part of a write/autosave.
 vim.g.autoformat = false
+
+vim.opt.wrap = true
