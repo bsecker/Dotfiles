@@ -71,6 +71,7 @@
     enable = true;
     lfs.enable = true;
     settings = {
+      alias.s = "town switch";
       user = {
         name = "Benjamin Secker";
         email = gitEmail;
