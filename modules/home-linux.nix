@@ -41,6 +41,9 @@ in
       # zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default # this doesn't really work with graphics accelleration on ubuntu without nixGL, so lets just skip it for now
       brightnessctl
       wlsunset
+      (writeShellScriptBin "laptop-time-report" ''
+        exec ${python3}/bin/python ${dotfiles}/scripts/laptop-time-report "$@"
+      '')
     ];
 
     # Keep Pi configuration live: edits take effect after Pi's /reload without

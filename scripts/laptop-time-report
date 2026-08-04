@@ -1,0 +1,171 @@
+#!/usr/bin/env python3
+"""Record weekly awake time from systemd's boot and sleep journal events."""
+
+import argparse
+import datetime as dt
+import json
+import subprocess
+from pathlib import Path
+
+
+REPORT_PATH = Path.home() / "laptop-working-time.txt"
+STATE_PATH = Path.home() / ".local" / "state" / "laptop-time-report.json"
+UTC = dt.timezone.utc
+
+
+def journal_events(selector, pattern, state):
+    command = [
+        "journalctl",
+        "--no-pager",
+        "--output=json",
+        *selector,
+        "--grep",
+        pattern,
+    ]
+    result = subprocess.run(command, check=True, capture_output=True, text=True)
+    events = []
+    for line in result.stdout.splitlines():
+        entry = json.loads(line)
+        timestamp = dt.datetime.fromtimestamp(
+            int(entry["__REALTIME_TIMESTAMP"]) / 1_000_000, tz=UTC
+        ).astimezone()
+        events.append((timestamp, state))
+    return events
+
+
+def boot_events():
+    command = [
+        "journalctl",
+        "--no-pager",
+        "--output=json",
+        "--dmesg",
+        "--grep",
+        "^Linux version ",
+    ]
+    result = subprocess.run(command, check=True, capture_output=True, text=True)
+    events = []
+    for line in result.stdout.splitlines():
+        entry = json.loads(line)
+        timestamp = dt.datetime.fromtimestamp(
+            int(entry["__REALTIME_TIMESTAMP"]) / 1_000_000, tz=UTC
+        ).astimezone()
+        events.append((timestamp, "awake"))
+    return events
+
+
+def monday(value):
+    return (value - dt.timedelta(days=value.weekday())).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+
+
+def add_interval(weeks, start, end):
+    while start < end:
+        week_start = monday(start)
+        week_end = week_start + dt.timedelta(days=7)
+        interval_end = min(end, week_end)
+        key = week_start.date().isoformat()
+        weeks[key] = weeks.get(key, 0) + (interval_end - start).total_seconds()
+        start = interval_end
+
+
+def load_state():
+    try:
+        with STATE_PATH.open() as state_file:
+            state = json.load(state_file)
+            return state.get("weeks", {}) if state.get("version") == 1 else {}
+    except FileNotFoundError:
+        return {}
+
+
+def write_if_changed(path, contents):
+    if path.exists() and path.read_text() == contents:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path = path.with_suffix(path.suffix + ".tmp")
+    temporary_path.write_text(contents)
+    temporary_path.replace(path)
+
+
+def format_duration(seconds):
+    minutes = round(seconds / 60)
+    hours, minutes = divmod(minutes, 60)
+    return f"{hours}h {minutes:02d}m"
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--details",
+        action="store_true",
+        help="print the current week's detected awake intervals",
+    )
+    arguments = parser.parse_args()
+
+    events = boot_events()
+    events += journal_events(
+        ["--unit", "systemd-logind.service"], r"^Suspending\.\.\.$", "asleep"
+    )
+    events += journal_events(
+        ["--unit", "systemd-suspend.service"],
+        r"^System returned from sleep operation",
+        "awake",
+    )
+    events += journal_events(["--identifier", "systemd"], r"^Shutting down\.$", "asleep")
+    events.sort()
+
+    now = dt.datetime.now().astimezone()
+    computed_weeks = {}
+    intervals = []
+    state = "unknown"
+    cursor = events[0][0] if events else now
+    for timestamp, next_state in events:
+        if state == "awake":
+            add_interval(computed_weeks, cursor, timestamp)
+            intervals.append((cursor, timestamp))
+        cursor = timestamp
+        state = next_state
+    if state == "awake":
+        add_interval(computed_weeks, cursor, now)
+        intervals.append((cursor, now))
+    computed_weeks = {
+        week: round(seconds / 60) * 60 for week, seconds in computed_weeks.items()
+    }
+
+    current_week = monday(now).date().isoformat()
+    saved_weeks = load_state()
+    # Completed weeks never need recomputing, so preserve them after journal rotation.
+    for week, seconds in computed_weeks.items():
+        if week == current_week or week not in saved_weeks:
+            saved_weeks[week] = seconds
+
+    report_weeks = sorted(saved_weeks.items(), reverse=True)
+    lines = [
+        "Laptop working time",
+        "Awake time between boot/resume and suspend; weeks start Monday.",
+        "",
+    ]
+    for week, seconds in report_weeks:
+        week_start = dt.date.fromisoformat(week)
+        week_end = week_start + dt.timedelta(days=6)
+        label = " (current)" if week == current_week else ""
+        lines.append(f"{week_start:%Y-%m-%d} to {week_end:%Y-%m-%d}{label}: {format_duration(seconds)}")
+    lines.append("")
+
+    write_if_changed(
+        STATE_PATH,
+        json.dumps({"version": 1, "weeks": saved_weeks}, indent=2, sort_keys=True) + "\n",
+    )
+    write_if_changed(REPORT_PATH, "\n".join(lines))
+
+    if arguments.details:
+        current_week_start = monday(now)
+        print(f"Awake intervals since {current_week_start:%Y-%m-%d %H:%M}:")
+        for start, end in intervals:
+            start = max(start, current_week_start)
+            if start < end:
+                print(f"{start:%a %H:%M} to {end:%a %H:%M}: {format_duration((end - start).total_seconds())}")
+
+
+if __name__ == "__main__":
+    main()

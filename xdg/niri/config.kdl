@@ -94,7 +94,7 @@ output "eDP-1" {
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
     transform "normal"
-    position x=0 y=0
+    position x=3072 y=0
 
     // Position of the output in the global coordinate space.
     // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
@@ -108,15 +108,15 @@ output "eDP-1" {
 }
 
 output "Dell Inc. DELL S2725QS 1H5P364" {
-    mode "3840x2160@60.000"
+    mode "3840x2160@120.000"
     scale 1.25
-    position x=0 y=0
+    position x=-3072 y=0
 }
 
 output "Dell Inc. DELL S2725QS DZBL364" {
     mode "3840x2160@120.000"
     scale 1.25
-    position x=-3072 y=0
+    position x=0 y=0
 }
 
 // Athene's Desktop monitor.
@@ -190,7 +190,7 @@ layout {
         // off
 
         // How many logical pixels the ring extends out from the windows.
-        width 4
+        width 6
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -247,7 +247,7 @@ layout {
     // You can enable drop shadows for windows.
     shadow {
         // Uncomment the next line to enable shadows.
-        // on
+        on
 
         // By default, the shadow draws only around its window, and not behind it.
         // Uncomment this setting to make the shadow draw behind its window.
@@ -333,7 +333,7 @@ animations {
     // off
 
     // Slow down all animations by this factor. Values below 1 speed them up instead.
-    // slowdown 3.0
+    slowdown 0.5
 }
 
 // Window rules let you adjust behavior for individual windows.

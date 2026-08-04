@@ -111,12 +111,14 @@
         tfyeet = "tofu apply -auto-approve";
         kc = "kubectl";
         please = "sudo";
+        fucking = "sudo";
         lah = "ls -lah";
         cat = "bat";
         gloga = "git log --oneline --decorate --color --graph --all";
         oc = "opencode";
-        gt = "git town";
         charging = "watch -n 0.1 upower -i $(upower -e | grep BAT)";
+        ghs = "gh stack";
+        lg = "lazygit";
       }
       // extraShellAliases;
 
