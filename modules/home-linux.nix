@@ -56,6 +56,9 @@ in
   # LazyVim writes part of its configuration at runtime.
   xdg.configFile."nvim".source = link "xdg/nvim";
 
+  xdg.configFile."ranger/rc.conf".source = link "xdg/ranger/rc.conf";
+  xdg.configFile."ranger/rifle.conf".source = link "xdg/ranger/rifle.conf";
+
   # Keep Niri's configuration writable outside the Nix store.
   xdg.configFile."niri".source = link "xdg/niri";
   xdg.configFile."niri".force = true;
