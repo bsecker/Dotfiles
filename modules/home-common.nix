@@ -160,7 +160,7 @@
             read -r "branch?New worktree name/branch: " || return
             [ -n "$branch" ] || return
             repo_root=$(git rev-parse --show-toplevel) || return
-            worktree_dir="$(dirname "$repo_root")/$branch"
+            worktree_dir="$(dirname "$repo_root")/worktrees/$branch"
             git worktree add "$worktree_dir" -b "$branch" || return
             cd "$worktree_dir" || return
             echo "Created and switched to worktree: $worktree_dir (branch: $branch)"
