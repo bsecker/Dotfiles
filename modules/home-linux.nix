@@ -69,6 +69,12 @@ in
 
   xdg.configFile."mako".source = link "xdg/mako";
 
+  xdg.configFile."fuzzel/fuzzel.ini".source = link "xdg/fuzzel/fuzzel.ini";
+  xdg.configFile."fuzzel/fuzzel.ini".force = true;
+
+  xdg.dataFile."applications/chromium_daemon.desktop".source = link "xdg/applications/chromium_daemon.desktop";
+  xdg.dataFile."applications/chromium_daemon.desktop".force = true;
+
   # Swaylock does not modify its configuration at runtime.
   xdg.configFile."swaylock".source = ../xdg/swaylock;
 }

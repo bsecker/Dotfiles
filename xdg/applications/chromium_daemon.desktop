@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Chromium daemon
+# this file basically exists to hide the chromium daemon as it causes fuzzel to show chromium twice
+Hidden=true
