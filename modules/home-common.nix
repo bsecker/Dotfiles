@@ -146,7 +146,7 @@
 
         # Jump to a worktree by branch name, or create a new one.
         wt() {
-          local selection dir branch repo_root worktree_dir
+          local selection dir branch repo_root worktree_dir upstream_branch
           selection=$(
             {
               printf '__new_worktree__\tnew worktree\n'
@@ -168,9 +168,18 @@
             [ -n "$branch" ] || return
             repo_root=$(git rev-parse --show-toplevel) || return
             worktree_dir="$(dirname "$repo_root")/worktrees/$branch"
-            git worktree add "$worktree_dir" -b "$branch" || return
+            if git show-ref --verify --quiet "refs/heads/$branch"; then
+              git worktree add "$worktree_dir" "$branch" || return
+            else
+              upstream_branch=$(git for-each-ref --format='%(refname:short)' "refs/remotes/*/$branch" | awk 'NR == 1')
+              if [ -n "$upstream_branch" ]; then
+                git worktree add --track -b "$branch" "$worktree_dir" "$upstream_branch" || return
+              else
+                git worktree add "$worktree_dir" -b "$branch" || return
+              fi
+            fi
             cd "$worktree_dir" || return
-            echo "Created and switched to worktree: $worktree_dir (branch: $branch)"
+            echo "Switched to worktree: $worktree_dir (branch: $branch)"
           elif [ -n "$dir" ]; then
             cd "$dir" || return
             echo "Switched to worktree: $dir (branch: $branch)"
