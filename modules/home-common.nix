@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgs-unstable,
+  hunk,
   spr,
   username,
   homeDir,
@@ -10,6 +11,8 @@
   ...
 }:
 {
+  imports = [ hunk.homeManagerModules.default ];
+
   home.username = username;
   home.homeDirectory = homeDir;
   home.stateVersion = "25.11";
@@ -59,6 +62,10 @@
   ];
 
   programs.home-manager.enable = true;
+  programs.hunk = {
+    enable = true;
+    enableGitIntegration = true;
+  };
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;

@@ -8,20 +8,25 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    hunk = {
+      url = "github:modem-dev/hunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     spr.url = "github:ejoffe/spr";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, spr }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, hunk, spr }:
   let
     mkSystem = hostModule: nix-darwin.lib.darwinSystem {
       specialArgs = {
         inherit self;
         pkgs-unstable = import nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
-        inherit spr;
+        inherit hunk spr;
       };
       modules = [
         ./modules/darwin.nix
         home-manager.darwinModules.home-manager
+        { home-manager.extraSpecialArgs = { inherit hunk; }; }
         hostModule
       ];
     };
@@ -34,7 +39,7 @@
       };
       extraSpecialArgs = {
         pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
-        inherit spr;
+        inherit hunk spr;
       };
       modules = [
         hostModule
