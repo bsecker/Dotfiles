@@ -25,6 +25,22 @@ in
   systemd.user.services.swaybg = mkNiriService "${pkgs.swaybg}/bin/swaybg -m fill -i %h/Dotfiles/wallpapers/6.jpg";
   systemd.user.services.wlsunset = mkNiriService "${pkgs.wlsunset}/bin/wlsunset -t 3500 -s 19:00";
   systemd.user.services.swayidle = mkNiriService "${pkgs.swayidle}/bin/swayidle -w timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' timeout 600 '/usr/bin/swaylock -f' before-sleep '/usr/bin/swaylock -f'";
+  systemd.user.services.openai-codex-usage = {
+    Unit.Description = "Refresh OpenAI Codex usage cache";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.nodejs}/bin/node ${dotfiles}/scripts/openai-codex-usage-refresh.mjs";
+    };
+  };
+  systemd.user.timers.openai-codex-usage = {
+    Unit.Description = "Refresh OpenAI Codex usage cache every five minutes";
+    Timer = {
+      OnBootSec = "1m";
+      OnUnitActiveSec = "5m";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
 
   # Linux-only home-manager config goes here (i3, polybar, picom, etc.)
   home = {

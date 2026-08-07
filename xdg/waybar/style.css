@@ -157,6 +157,7 @@ button {
 #memory,
 #custom-clipboard,
 #custom-bluetooth,
+#custom-openai-usage,
 #backlight,
 #network {
   padding: 0 10px;
@@ -167,12 +168,25 @@ button {
 #custom-cpu:hover,
 #custom-clipboard:hover,
 #custom-bluetooth:hover,
+#custom-openai-usage:hover,
 #network:hover,
 #idle_inhibitor:hover,
 #custom-swaync:hover,
 #backlight:hover,
 #wireplumber:hover {
   color: @color1;
+}
+
+#custom-openai-usage.warning {
+  color: @focused2;
+}
+
+#custom-openai-usage.critical {
+  color: @urgent;
+}
+
+#custom-openai-usage.unavailable {
+  color: @color2;
 }
 
 #idle_inhibitor {

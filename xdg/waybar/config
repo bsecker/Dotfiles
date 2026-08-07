@@ -4,7 +4,7 @@
     "spacing": 5,
     "modules-left": ["group/utilities", "group/workspaces"],
     "modules-center": ["group/window"],
-    "modules-right": ["group/cpuram", "group/system"],
+    "modules-right": ["group/openai", "group/cpuram", "group/system"],
 
     "custom/openbracket": {
       "format": "[",
@@ -66,6 +66,16 @@
     "group/cpuram": {
       "orientation": "horizontal",
       "modules": ["custom/openbracket", "cpu", "custom/split", "memory", "custom/closebracket"]
+    },
+    "group/openai": {
+      "orientation": "horizontal",
+      "modules": ["custom/openbracket", "custom/openai-usage", "custom/closebracket"]
+    },
+    "custom/openai-usage": {
+      "exec": "$HOME/Dotfiles/xdg/waybar/scripts/openai_usage.sh",
+      "return-type": "json",
+      "interval": 60,
+      "tooltip": true
     },
     "cpu": {
       "format": "CPU:{usage}%",

@@ -37,7 +37,7 @@ type ApiWindow = {
 	reset_at?: number;
 };
 
-const CACHE_FILE = join(homedir(), ".pi", "agent", "cache", "pi-usage", "cache.json");
+const CACHE_FILE = join(process.env.XDG_CACHE_HOME ?? join(homedir(), ".cache"), "openai-codex", "usage.json");
 const REFRESH_MS = 60_000;
 
 function formatTokens(tokens: number | null): string {
