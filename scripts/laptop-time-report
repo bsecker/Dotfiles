@@ -134,9 +134,10 @@ def main():
 
     current_week = monday(now).date().isoformat()
     saved_weeks = load_state()
-    # Completed weeks never need recomputing, so preserve them after journal rotation.
+    first_journal_week = monday(events[0][0]).date().isoformat() if events else None
+    # Recompute weeks present in the journal. Only its oldest week may be partial after rotation.
     for week, seconds in computed_weeks.items():
-        if week == current_week or week not in saved_weeks:
+        if week != first_journal_week or week not in saved_weeks:
             saved_weeks[week] = seconds
 
     report_weeks = sorted(saved_weeks.items(), reverse=True)
