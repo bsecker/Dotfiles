@@ -126,6 +126,7 @@
         charging = "watch -n 0.1 upower -i $(upower -e | grep BAT)";
         ghs = "gh stack";
         lg = "lazygit";
+        staged = "git diff --staged";
       }
       // extraShellAliases;
 
