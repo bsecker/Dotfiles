@@ -1,2 +1,4 @@
 # OpenCode runtime state
-xdg/opencode/permission-log.jsonl
+xdg/opencode/permission-log.json
+
+__pycache__/

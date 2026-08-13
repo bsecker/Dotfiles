@@ -1,0 +1,8 @@
+{
+  "work_minutes": 20,
+  "break_seconds": 30,
+  "long_break_minutes": 2,
+  "breaks_before_long_break": 3,
+  "typing_quiet_seconds": 5,
+  "keyboard_name": "ZSA Technology Labs Moonlander Mark I"
+}

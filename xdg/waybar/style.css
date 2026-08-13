@@ -158,6 +158,7 @@ button {
 #custom-clipboard,
 #custom-bluetooth,
 #custom-openai-usage,
+#custom-pomodoro,
 #backlight,
 #network {
   padding: 0 10px;
@@ -169,6 +170,7 @@ button {
 #custom-clipboard:hover,
 #custom-bluetooth:hover,
 #custom-openai-usage:hover,
+#custom-pomodoro:hover,
 #network:hover,
 #idle_inhibitor:hover,
 #custom-swaync:hover,
@@ -187,6 +189,19 @@ button {
 
 #custom-openai-usage.unavailable {
   color: @color2;
+}
+
+#custom-pomodoro.break {
+  color: @color3;
+}
+
+#custom-pomodoro.paused,
+#custom-pomodoro.unavailable {
+  color: @color2;
+}
+
+#custom-pomodoro.waiting {
+  color: @focused2;
 }
 
 #idle_inhibitor {

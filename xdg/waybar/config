@@ -4,7 +4,7 @@
     "spacing": 5,
     "modules-left": ["group/utilities", "group/workspaces"],
     "modules-center": ["group/window"],
-    "modules-right": ["group/openai", "group/cpuram", "group/system"],
+    "modules-right": ["group/openai", "group/pomodoro", "group/cpuram", "group/system"],
 
     "custom/openbracket": {
       "format": "[",
@@ -76,6 +76,18 @@
       "return-type": "json",
       "interval": 60,
       "tooltip": true
+    },
+    "group/pomodoro": {
+      "orientation": "horizontal",
+      "modules": ["custom/openbracket", "custom/pomodoro", "custom/closebracket"]
+    },
+    "custom/pomodoro": {
+      "exec": "$HOME/Dotfiles/xdg/waybar/scripts/pomodoro.sh waybar",
+      "return-type": "json",
+      "interval": 1,
+      "tooltip": true,
+      "on-click": "$HOME/Dotfiles/xdg/waybar/scripts/pomodoro.sh toggle",
+      "on-click-right": "$HOME/Dotfiles/xdg/waybar/scripts/pomodoro.sh skip"
     },
     "cpu": {
       "format": "CPU:{usage}%",
