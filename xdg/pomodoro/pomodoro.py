@@ -114,7 +114,8 @@ def keyboard_devices(config):
 
 def run_daemon(config):
     state = new_state(config)
-    last_typing_at = 0
+    last_typing_at = time.time()
+    idle_reset_applied = False
     write_state(state)
     devices = keyboard_devices(config)
     poller = select.poll()
@@ -125,7 +126,12 @@ def run_daemon(config):
         state = read_state() or state
         now = time.time()
         if not state["paused"]:
-            if state["expired_at"] is None and now >= state["ends_at"]:
+            if state["mode"] == "work" and not idle_reset_applied and now - last_typing_at >= config["idle_reset_seconds"]:
+                state["ends_at"] = now + config["work_minutes"] * 60
+                state["expired_at"] = None
+                idle_reset_applied = True
+                write_state(state)
+            elif state["expired_at"] is None and now >= state["ends_at"]:
                 state["expired_at"] = now
             if state["expired_at"] is not None and now - last_typing_at >= config["typing_quiet_seconds"]:
                 advance(state, config)
@@ -137,6 +143,7 @@ def run_daemon(config):
             for event in device.read():
                 if event.type == ecodes.EV_KEY and event.value == 1:
                     last_typing_at = time.time()
+                    idle_reset_applied = False
 
 
 def waybar(config):

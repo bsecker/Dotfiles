@@ -10,6 +10,17 @@
   extraShellAliases ? { },
   ...
 }:
+let
+  gen-kubeconfig = pkgs.writeShellApplication {
+    name = "gen-kubeconfig";
+    runtimeInputs = with pkgs; [
+      kubectl
+      gnused
+      coreutils
+    ];
+    text = builtins.readFile ../scripts/gen_kubeconfig.sh;
+  };
+in
 {
   imports = [ hunk.homeManagerModules.default ];
 
@@ -40,6 +51,7 @@
     btop # kind of nice but idk
     dive
     git-town
+    gen-kubeconfig
 
     # things I generally want to be more on the bleeding edge on
     pkgs-unstable.claude-code

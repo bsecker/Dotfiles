@@ -4,5 +4,6 @@
   "long_break_minutes": 2,
   "breaks_before_long_break": 3,
   "typing_quiet_seconds": 5,
+  "idle_reset_seconds": 120,
   "keyboard_name": "ZSA Technology Labs Moonlander Mark I"
 }
