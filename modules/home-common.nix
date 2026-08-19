@@ -139,6 +139,7 @@ in
         ghs = "gh stack";
         lg = "lazygit";
         staged = "git diff --staged";
+        ghpr = "gh pr view --web";
       }
       // extraShellAliases;
 

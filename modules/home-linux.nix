@@ -62,6 +62,7 @@ in
       brightnessctl
       wlsunset
       pomodoro
+      wl-clipboard
       (writeShellScriptBin "laptop-time-report" ''
         exec ${python3}/bin/python ${dotfiles}/scripts/laptop-time-report "$@"
       '')
