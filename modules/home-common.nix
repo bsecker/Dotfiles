@@ -2,7 +2,6 @@
   pkgs,
   pkgs-unstable,
   hunk,
-  spr,
   username,
   homeDir,
   gitEmail,
@@ -59,7 +58,6 @@ in
     pkgs-unstable.codex
     pkgs-unstable.opencode
     pkgs-unstable.pi-coding-agent
-    spr.packages.${pkgs.system}.default
 
     # python
     python3

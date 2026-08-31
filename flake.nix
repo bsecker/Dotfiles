@@ -12,16 +12,15 @@
       url = "github:modem-dev/hunk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    spr.url = "github:ejoffe/spr";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, hunk, spr }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, hunk }:
   let
     mkSystem = hostModule: nix-darwin.lib.darwinSystem {
       specialArgs = {
         inherit self;
         pkgs-unstable = import nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
-        inherit hunk spr;
+        inherit hunk;
       };
       modules = [
         ./modules/darwin.nix
@@ -39,7 +38,7 @@
       };
       extraSpecialArgs = {
         pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
-        inherit hunk spr;
+        inherit hunk;
       };
       modules = [
         hostModule
