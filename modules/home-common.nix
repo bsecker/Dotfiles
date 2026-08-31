@@ -140,6 +140,7 @@ in
         lg = "lazygit";
         staged = "git diff --staged";
         ghpr = "gh pr view --web";
+        push = "git push --force-with-lease";
       }
       // extraShellAliases;
 
