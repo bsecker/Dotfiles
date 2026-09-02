@@ -139,6 +139,7 @@ in
         staged = "git diff --staged";
         ghpr = "gh pr view --web";
         push = "git push --force-with-lease";
+        scanwifi = "nmcli device wifi scan";
       }
       // extraShellAliases;
 

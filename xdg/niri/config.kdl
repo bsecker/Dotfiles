@@ -135,6 +135,8 @@ output "Samsung Electric Company LS49AG95 HNTW500047" {
 // Avoid Intel-to-NVIDIA scanout buffer allocation failures on external outputs.
 debug {
     render-drm-device "/dev/dri/by-path/pci-0000:01:00.0-render"
+    // Avoid cross-GPU direct-scanout buffers when Intel and NVIDIA outputs are active.
+    disable-direct-scanout
 }
 
 // Settings that influence how windows are positioned and sized.

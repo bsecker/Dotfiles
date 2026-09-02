@@ -37,6 +37,8 @@
       "rg *": "allow",
       "sleep *": "allow",
 
+      "niri msg outputs": "allow",
+
     }
   },
 }
