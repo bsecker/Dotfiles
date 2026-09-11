@@ -107,18 +107,21 @@ output "eDP-1" {
     // automatically.
 }
 
+// actually, do use. I don't know why it's named this (Amelia's computer I think)
 output "DO NOT USE - RTK Verbatim MT15 demoset-1" {
     mode "1920x1080@60.000"
     scale 1
     position x=1152 y=0
 }
 
+// work 4k
 output "Dell Inc. DELL S2725QS 1H5P364" {
     mode "3840x2160@120.000"
     scale 1.25
     position x=-3072 y=0
 }
 
+// work 4k
 output "Dell Inc. DELL S2725QS DZBL364" {
     mode "3840x2160@120.000"
     scale 1.25

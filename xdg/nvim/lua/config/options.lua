@@ -5,4 +5,7 @@
 -- Keep explicit formatting available, but never format as part of a write/autosave.
 vim.g.autoformat = false
 
+-- vim.g.lazyvim_python_lsp = "pyright"
+vim.g.lazyvim_python_lsp = "ty"
+
 vim.opt.wrap = true
