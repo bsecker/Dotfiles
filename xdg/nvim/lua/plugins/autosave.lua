@@ -1,4 +1,10 @@
 return {
   "okuuva/auto-save.nvim",
-  opts = {},
+  opts = {
+    trigger_events = {
+      immediate_save = { "BufLeave", "FocusLost" },
+      defer_save = {},
+      cancel_deferred_save = {},
+    },
+  },
 }

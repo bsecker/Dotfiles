@@ -137,8 +137,8 @@ output "Philips Consumer Electronics Company PHL 346E2C UK02522036043" {
 
 output "Samsung Electric Company LS49AG95 HNTW500047" {
     mode "5120x1440@143.979"
-    scale 1
-    position x=2304 y=0
+    scale 0.8
+    position x=5376 y=000
 }
 
 // Avoid Intel-to-NVIDIA scanout buffer allocation failures on external outputs.
