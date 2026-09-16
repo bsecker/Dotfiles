@@ -14,8 +14,8 @@ in
       notes = "cd ~/Work/cdds_notes";
       dot = "cd ~/Dotfiles";
       amend = "git commit --amend --no-edit";
-      tshome = "sudo tailscale switch benjamin.secker@gmail.com";
-      tswork = "sudo tailscale switch cddshq.org.github";
+      tshome = "tailscale switch benjamin.secker@gmail.com";
+      tswork = "tailscale switch cddshq.org.github";
 
     };
   };
