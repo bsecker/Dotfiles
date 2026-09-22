@@ -9,3 +9,13 @@ vim.keymap.set("n", "<C-Up>", "<C-k>", { desc = "Go to Upper Window", remap = tr
 vim.keymap.set("n", "<C-Right>", "<C-l>", { desc = "Go to Right Window", remap = true })
 
 vim.keymap.set("n", "<leader>gH", require("config.github").copy_permalink, { desc = "Copy GitHub permalink" })
+
+vim.keymap.set("n", "<leader>wY", function()
+  local path = vim.fn.expand("%:p")
+  if path == "" then
+    vim.notify("Current buffer has no file", vim.log.levels.WARN)
+    return
+  end
+  vim.fn.setreg("+", path)
+  vim.notify("Copied " .. path)
+end, { desc = "Copy absolute file path" })
