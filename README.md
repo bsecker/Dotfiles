@@ -2,7 +2,26 @@
 
 My repo for tracking some of my customisation to my laptops/desktops.
 
-## Setup (Ubuntu)
+## Setup (NixOS desktop)
+
+The former Ubuntu desktop is now managed as a complete NixOS system with Home Manager.
+Keep the checkout at `~/Dotfiles`, which is also the path used by the Linux Home Manager
+symlinks.
+
+```
+git clone https://github.com/bsecker/dotfiles ~/Dotfiles
+cd ~/Dotfiles
+
+# Build first to verify the configuration without activating it
+sudo nix --extra-experimental-features 'nix-command flakes' run nixpkgs/nixos-26.05#nixos-rebuild -- build --flake "$HOME/Dotfiles#BenjaminDesktop-NixOS"
+
+# Activate after reviewing the build
+sudo nix --extra-experimental-features 'nix-command flakes' run nixpkgs/nixos-26.05#nixos-rebuild -- switch --flake "$HOME/Dotfiles#BenjaminDesktop-NixOS"
+```
+
+The host-specific boot and filesystem settings are in `hosts/nixos-desktop.nix`.
+
+## Setup (Ubuntu Home Manager)
 
 ```
 # base install
@@ -10,7 +29,7 @@ sudo apt install curl
 # install determinate nix - better and faster than base nix
 curl -fsSL https://install.determinate.systems/nix | sh -s -- install
 # install flake
-nix run home-manager/release-25.11 -- switch --flake github:bsecker/dotfiles#benjamin@linux-desktop -b backup
+nix run home-manager/release-26.05 -- switch --flake github:bsecker/dotfiles#benjamin@linux-cdds-laptop -b backup
 
 # ensure that we can use zsh as the default shell (blocked otherwise by chsh)
 echo "$(which zsh)" | sudo tee -a /etc/shells

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, isNixOS ? false, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/Dotfiles";
@@ -27,7 +27,7 @@ in
   fonts.fontconfig.enable = true;
   systemd.user.services.swaybg = mkNiriService "${pkgs.swaybg}/bin/swaybg -m fill -i %h/Dotfiles/wallpapers/6.jpg";
   systemd.user.services.wlsunset = mkNiriService "${pkgs.wlsunset}/bin/wlsunset -t 3500 -s 19:00";
-  systemd.user.services.swayidle = mkNiriService "${pkgs.swayidle}/bin/swayidle -w timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' timeout 600 '/usr/bin/swaylock -f' before-sleep '/usr/bin/swaylock -f'";
+  systemd.user.services.swayidle = mkNiriService "${pkgs.swayidle}/bin/swayidle -w timeout 601 '${pkgs.niri}/bin/niri msg action power-off-monitors' timeout 600 '${pkgs.swaylock}/bin/swaylock -f' before-sleep '${pkgs.swaylock}/bin/swaylock -f'";
   systemd.user.services.pomodoro = mkNiriService "${pomodoro}/bin/pomodoro daemon";
   systemd.user.services.openai-codex-usage = {
     Unit.Description = "Refresh OpenAI Codex usage cache";
@@ -50,7 +50,7 @@ in
   home = {
 
     # so that gnome etc can find the nix-installed apps
-    sessionVariables = {
+    sessionVariables = lib.optionalAttrs (!isNixOS) {
       XDG_DATA_DIRS = "$HOME/.nix-profile/share:/var/lib/snapd/desktop:/usr/local/share:/usr/share:/nix/var/nix/profiles/default/share";
     };
 
