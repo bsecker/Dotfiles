@@ -8,7 +8,7 @@ work:
     home-manager switch --flake .#benjamin@linux-cdds-laptop
 
 desktop:
-    home-manager switch --flake .#benjamin@linux-desktop
+    sudo nixos-rebuild switch --flake path:.#BenjaminDesktop-NixOS
 
 update:
     nix flake update
