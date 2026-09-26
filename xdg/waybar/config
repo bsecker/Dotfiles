@@ -93,13 +93,13 @@
       "format": "CPU:{usage}%",
       "tooltip": false,
       "interval": 2,
-      "on-click": "~/.local/kitty.app/bin/kitty -e htop"
+      "on-click": "kitty -e htop"
     },
     "memory": {
       "format": "RAM:{}%",
       "tooltip": false,
       "interval": 2,
-      "on-click": "~/.local/kitty.app/bin/kitty -e htop"
+      "on-click": "kitty -e htop"
     },
 
     "group/system": {
@@ -129,7 +129,7 @@
       "exec": "$HOME/Dotfiles/xdg/waybar/scripts/network_status.sh",
       "interval": 5,
       "tooltip": false,
-      "on-click": "~/.local/kitty.app/bin/kitty -e nmtui"
+      "on-click": "kitty -e nmtui"
     },
     "custom/bluetooth": {
       "format": "{}",

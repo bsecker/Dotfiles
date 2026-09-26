@@ -57,6 +57,7 @@ in
     packages = with pkgs; [
       nerd-fonts.iosevka
       nerd-fonts.ubuntu-mono
+      kitty
       # signal-desktop # this causes issues with electron trying to rebuild from source, takes forever, don't bother
       # zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default # this doesn't really work with graphics accelleration on ubuntu without nixGL, so lets just skip it for now
       brightnessctl
