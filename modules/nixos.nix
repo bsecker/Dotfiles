@@ -6,6 +6,7 @@
   users.defaultUserShell = pkgs.zsh;
 
   programs.niri.enable = true;
+  systemd.services.display-manager.path = [ pkgs.niri ];
   services.displayManager.gdm.enable = true;
   hardware.graphics.enable = true;
   xdg.portal = {
