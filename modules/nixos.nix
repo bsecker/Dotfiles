@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, zen-browser, ... }:
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -21,4 +21,9 @@
     pulse.enable = true;
   };
   security.rtkit.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    firefox-bin
+  ];
 }

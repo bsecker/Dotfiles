@@ -13,9 +13,13 @@
       url = "github:modem-dev/hunk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, hunk, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, hunk, zen-browser, ... }:
   let
     mkDarwinSystem = hostModule: nix-darwin.lib.darwinSystem {
       specialArgs = {
@@ -34,7 +38,7 @@
     mkNixOSSystem = { system ? "x86_64-linux", hostModule }: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit self hunk;
+        inherit self hunk zen-browser;
         pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
       };
       modules = [
