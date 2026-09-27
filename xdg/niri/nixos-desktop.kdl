@@ -1,7 +1,7 @@
 // Desktop monitors. Keep hardware-specific settings out of common.kdl.
 output "Samsung Electric Company LS49AG95 HNTW500047" {
     mode "5120x1440@119.999"
-    scale 0.8
+    scale 1
     position x=5376 y=000
 }
 

@@ -14,8 +14,6 @@ in
     extraShellAliases = {
       ws = "cd ~/Work/cdds_ws";
       notes = "cd ~/Work/cdds_notes";
-      dot = "cd ~/Dotfiles";
-      amend = "git commit --amend --no-edit";
       tshome = "tailscale switch benjamin.secker@gmail.com";
       tswork = "tailscale switch cddshq.org.github";
 

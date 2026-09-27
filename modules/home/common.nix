@@ -132,13 +132,17 @@ in
         fucking = "sudo";
         lah = "ls -lah";
         cat = "bat";
-        gloga = "git log --oneline --decorate --color --graph --all";
         oc = "opencode";
         ghs = "gh stack";
         lg = "lazygit";
-        staged = "git diff --staged";
+        dot = "cd ~/Dotfiles"; 
+
+        # Git aliases
+        gloga = "git log --oneline --decorate --color --graph --all";
         ghpr = "gh pr view --web";
         push = "git push --force-with-lease";
+        amend = "git commit --amend --no-edit";
+        staged = "git diff --staged";
       }
       // extraShellAliases;
 

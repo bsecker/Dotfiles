@@ -8,7 +8,8 @@
       ".env.example": "allow",
       "secrets/**": "ask",
       "~/.ssh/**": "ask",
-      "~/.aws/**": "ask"
+      "~/.aws/**": "ask",
+      "/nix/store/**": "allow",
     },
     "edit": {
       "*": "ask",
