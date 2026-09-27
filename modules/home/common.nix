@@ -2,6 +2,7 @@
   pkgs,
   pkgs-unstable,
   hunk,
+  worktrunk,
   username,
   homeDir,
   gitEmail,
@@ -21,7 +22,10 @@ let
   };
 in
 {
-  imports = [ hunk.homeManagerModules.default ];
+  imports = [
+    hunk.homeManagerModules.default
+    worktrunk.homeModules.default
+  ];
 
   home.username = username;
   home.homeDirectory = homeDir;
@@ -76,6 +80,10 @@ in
   programs.hunk = {
     enable = true;
     enableGitIntegration = true;
+  };
+  programs.worktrunk = {
+    enable = true;
+    enableZshIntegration = true;
   };
   programs.direnv = {
     enable = true;
@@ -143,6 +151,9 @@ in
         push = "git push --force-with-lease";
         amend = "git commit --amend --no-edit";
         staged = "git diff --staged";
+        scanwifi = "nmcli device wifi list --rescan yes";
+        wtl = "wt list";
+        wts = "wt switch";
       }
       // extraShellAliases;
 
@@ -162,7 +173,7 @@ in
         eval "$(devenv hook zsh)"
 
         # Jump to a worktree by branch name, or create a new one.
-        wt() {
+        wt-old() {
           local selection dir branch repo_root worktree_dir upstream_branch
           selection=$(
             {

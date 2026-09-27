@@ -19,9 +19,9 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    worktrunk.url = "github:max-sixty/worktrunk";
   };
-
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, home-manager-darwin, hunk, zen-browser, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, home-manager-darwin, hunk, worktrunk, zen-browser, ... }:
   let
     unstableFor = system: import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
     homeManagerIntegration = {
@@ -33,14 +33,14 @@
       specialArgs = {
         inherit self;
         pkgs-unstable = unstableFor "aarch64-darwin";
-        inherit hunk;
+        inherit hunk worktrunk;
       };
       modules = [
         ./modules/darwin/base.nix
         home-manager-darwin.darwinModules.home-manager
         homeManagerIntegration
         { home-manager.extraSpecialArgs = {
-            inherit hunk;
+            inherit hunk worktrunk;
             pkgs-unstable = unstableFor "aarch64-darwin";
           };
         }
@@ -51,14 +51,14 @@
     mkNixOSSystem = { system ? "x86_64-linux", hostModule }: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit self hunk zen-browser;
+        inherit self hunk worktrunk zen-browser;
         pkgs-unstable = unstableFor system;
       };
       modules = [
         home-manager.nixosModules.home-manager
         homeManagerIntegration
         { home-manager.extraSpecialArgs = {
-            inherit hunk;
+            inherit hunk worktrunk;
             pkgs-unstable = unstableFor system;
           };
         }
@@ -75,7 +75,7 @@
       };
       extraSpecialArgs = {
         pkgs-unstable = unstableFor system;
-        inherit hunk;
+        inherit hunk worktrunk;
       };
       modules = [
         hostModule
