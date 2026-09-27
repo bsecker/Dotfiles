@@ -1,4 +1,4 @@
-{ extraBrewCasks ? [], extraBrewFormulas ? [], ... }: {
+{
   homebrew = {
     enable = true;
     taps = [ 
@@ -11,7 +11,6 @@
       "tailscale"
       "homerow"
       "zen"
-    ] ++ extraBrewCasks;
-    brews = [ "htop" ] ++ extraBrewFormulas;
+    ];
   };
 }

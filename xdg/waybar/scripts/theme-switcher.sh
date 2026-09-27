@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Theme Switcher Script
 WALLPAPER_DIR="$HOME/new-dotfiles/assets"

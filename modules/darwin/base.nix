@@ -1,14 +1,9 @@
-{ self, pkgs, lib, ... }: {
+{ self, lib, ... }: {
   
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "claude-code"
     ];
-
-  environment.systemPackages = [
-    pkgs.vim
-    pkgs.fzf
-  ];
 
   nix.settings.experimental-features = "nix-command flakes";
 

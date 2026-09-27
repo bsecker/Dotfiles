@@ -1,0 +1,49 @@
+// Laptop and office monitors.
+output "eDP-1" {
+    mode "2880x1800@120.000"
+    scale 1.25
+    transform "normal"
+    position x=3072 y=0
+}
+
+output "DO NOT USE - RTK Verbatim MT15 demoset-1" {
+    mode "1920x1080@60.000"
+    scale 1
+    position x=1152 y=0
+}
+
+output "Dell Inc. DELL S2725QS 1H5P364" {
+    mode "3840x2160@120.000"
+    scale 1.25
+    position x=-3072 y=0
+}
+
+output "Dell Inc. DELL S2725QS DZBL364" {
+    mode "3840x2160@120.000"
+    scale 1.25
+    position x=0 y=0
+}
+
+output "Philips Consumer Electronics Company PHL 346E2C UK02522036043" {
+    mode "3440x1440@100.000"
+    scale 1
+}
+
+output "Samsung Electric Company LS49AG95 HNTW500047" {
+    mode "5120x1440@119.999"
+    scale 0.8
+    position x=5376 y=000
+}
+
+// Avoid Intel-to-NVIDIA scanout buffer allocation failures on external outputs.
+debug {
+    render-drm-device "/dev/dri/by-path/pci-0000:01:00.0-render"
+    disable-direct-scanout
+}
+
+binds {
+    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn-sh "exec kitty --directory ~/Work/cdds_ws"; }
+    Mod+Shift+Return hotkey-overlay-title="Open a Terminal stacked in the current column: kitty" { spawn-sh "kitty --directory ~/Work/cdds_ws & sleep 0.3; niri msg action focus-window-previous; niri msg action consume-window-into-column; niri msg action focus-window-bottom"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--device=intel_backlight" "set" "+10%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--device=intel_backlight" "set" "10%-"; }
+}

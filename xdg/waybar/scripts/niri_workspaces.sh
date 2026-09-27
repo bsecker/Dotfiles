@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 niri msg -j workspaces | jq -r '
   sort_by(.idx)

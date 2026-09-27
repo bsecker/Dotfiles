@@ -4,7 +4,7 @@ let
   link = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
 in
 {
-  imports = [ ./home-common.nix ];
+  imports = [ ./common.nix ];
 
   programs.zsh.initContent = ''
     # Add Homebrew (Apple Silicon) to PATH for casks installed via nix-darwin
@@ -15,7 +15,7 @@ in
 
   # Cmux saves edits directly to this configuration file.
   xdg.configFile."cmux/cmux.json".source = link "xdg/cmux/cmux.json";
-  xdg.configFile."ghostty/config".source = ../xdg/ghostty/config;
+  xdg.configFile."ghostty/config".source = ../../xdg/ghostty/config;
 
   # Keep Pi configuration live: edits take effect after Pi's /reload without
   # rebuilding or re-applying Home Manager.

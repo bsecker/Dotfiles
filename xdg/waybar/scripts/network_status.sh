@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-ip -o -4 addr show dev wlp0s20f3 | awk '{split($4, address, "/"); print "󰤨  " address[1]}'
+ip -o -4 addr show scope global | awk 'NR == 1 {split($4, address, "/"); print "󰤨  " address[1]}'

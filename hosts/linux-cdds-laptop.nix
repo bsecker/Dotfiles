@@ -1,10 +1,12 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 let
   username = "benjamin";
   homeDir = "/home/${username}";
 in
 {
-  imports = [ ../modules/home-linux.nix ];
+  imports = [ ../modules/home/linux.nix ../modules/home/niri.nix ../modules/home/ubuntu.nix ];
+  dotfiles.niri.hostConfig = ../xdg/niri/ubuntu-laptop.kdl;
+  dotfiles.niri.hasBacklight = true;
 
   _module.args = {
     inherit username homeDir;
@@ -12,8 +14,6 @@ in
     extraShellAliases = {
       ws = "cd ~/Work/cdds_ws";
       notes = "cd ~/Work/cdds_notes";
-      dot = "cd ~/Dotfiles";
-      amend = "git commit --amend --no-edit";
       tshome = "tailscale switch benjamin.secker@gmail.com";
       tswork = "tailscale switch cddshq.org.github";
 
@@ -47,5 +47,4 @@ in
     }
   '';
 
-  home.packages = [ pkgs._1password-gui ];
 }
