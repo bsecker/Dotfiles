@@ -79,6 +79,13 @@ linux
 - [x] fix nerd fonts not applying
 - [x] install i3 or equivalent
 
+
+NixOS
+
+- [ ] tailscale
+- [ ] fix steam
+- [ ] bluetooth cli/tui
+
 ## Remember
 
 - `nmtui` to edit wifi in niri

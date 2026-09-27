@@ -28,6 +28,7 @@
       "git show *": "allow",
       "git ls-files": "allow",
       "git check-ignore *": "allow",
+      "command *": "allow",
 
       "head *": "allow",
       "tail *": "allow",
@@ -38,6 +39,8 @@
       "sleep *": "allow",
 
       "niri msg outputs": "allow",
+      "niri --version": "allow",
+      "niri validate *": "allow",
 
     }
   },

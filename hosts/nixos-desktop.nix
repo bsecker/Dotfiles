@@ -51,6 +51,9 @@ in
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+
+
+
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [ vim wget ];
   services.openssh.enable = true;
