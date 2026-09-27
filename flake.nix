@@ -9,6 +9,8 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-darwin.url = "github:nix-community/home-manager/release-25.11";
+    home-manager-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     hunk = {
       url = "github:modem-dev/hunk";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,18 +21,29 @@
     };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, hunk, zen-browser, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, home-manager-darwin, hunk, zen-browser, ... }:
   let
+    unstableFor = system: import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
+    homeManagerIntegration = {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.backupFileExtension = "backup";
+    };
     mkDarwinSystem = hostModule: nix-darwin.lib.darwinSystem {
       specialArgs = {
         inherit self;
-        pkgs-unstable = import nixpkgs-unstable { system = "aarch64-darwin"; config.allowUnfree = true; };
+        pkgs-unstable = unstableFor "aarch64-darwin";
         inherit hunk;
       };
       modules = [
-        ./modules/darwin.nix
-        home-manager.darwinModules.home-manager
-        { home-manager.extraSpecialArgs = { inherit hunk; }; }
+        ./modules/darwin/base.nix
+        home-manager-darwin.darwinModules.home-manager
+        homeManagerIntegration
+        { home-manager.extraSpecialArgs = {
+            inherit hunk;
+            pkgs-unstable = unstableFor "aarch64-darwin";
+          };
+        }
         hostModule
       ];
     };
@@ -39,11 +52,17 @@
       inherit system;
       specialArgs = {
         inherit self hunk zen-browser;
-        pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
+        pkgs-unstable = unstableFor system;
       };
       modules = [
         home-manager.nixosModules.home-manager
-        ./modules/nixos.nix
+        homeManagerIntegration
+        { home-manager.extraSpecialArgs = {
+            inherit hunk;
+            pkgs-unstable = unstableFor system;
+          };
+        }
+        ./modules/nixos/base.nix
         hostModule
       ];
     };
@@ -55,7 +74,7 @@
 
       };
       extraSpecialArgs = {
-        pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
+        pkgs-unstable = unstableFor system;
         inherit hunk;
       };
       modules = [

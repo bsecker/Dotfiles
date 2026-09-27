@@ -1,10 +1,13 @@
-{ config, lib, modulesPath, pkgs, pkgs-unstable, hunk, ... }:
+{ config, lib, modulesPath, pkgs, zen-browser, ... }:
 let
   username = "benjamin";
   homeDir = "/home/${username}";
 in
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ../modules/nixos/niri-session.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -35,6 +38,10 @@ in
   swapDevices = [ ];
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.graphics.enable = true;
+  hardware.nvidia.open = false;
+  programs.steam.enable = true;
 
   networking.hostName = "BenjaminDesktop-NixOS";
   networking.networkmanager.enable = true;
@@ -55,20 +62,22 @@ in
 
 
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [ vim wget ];
   services.openssh.enable = true;
 
   system.stateVersion = "26.05";
 
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.backupFileExtension = "backup";
   home-manager.extraSpecialArgs = {
-    inherit hunk pkgs-unstable;
     inherit username homeDir;
     gitEmail = "benjamin.secker@gmail.com";
     extraShellAliases = { };
-    isNixOS = true;
   };
-  home-manager.users.${username} = import ../modules/home-linux.nix;
+  home-manager.users.${username} = {
+    imports = [ ../modules/home/linux.nix ../modules/home/niri.nix ];
+    home.packages = [
+      pkgs.firefox-bin
+      zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ];
+    dotfiles.niri.hostConfig = ../xdg/niri/nixos-desktop.kdl;
+    dotfiles.niri.hasBacklight = false;
+  };
 }

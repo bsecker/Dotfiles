@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 niri msg -j focused-window | jq -r '.title // ""'

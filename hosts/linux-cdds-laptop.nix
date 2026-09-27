@@ -1,10 +1,12 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 let
   username = "benjamin";
   homeDir = "/home/${username}";
 in
 {
-  imports = [ ../modules/home-linux.nix ];
+  imports = [ ../modules/home/linux.nix ../modules/home/niri.nix ../modules/home/ubuntu.nix ];
+  dotfiles.niri.hostConfig = ../xdg/niri/ubuntu-laptop.kdl;
+  dotfiles.niri.hasBacklight = true;
 
   _module.args = {
     inherit username homeDir;
@@ -47,5 +49,4 @@ in
     }
   '';
 
-  home.packages = [ pkgs._1password-gui ];
 }

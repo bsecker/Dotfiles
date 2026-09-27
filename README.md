@@ -2,6 +2,7 @@
 
 My repo for tracking some of my customisation to my laptops/desktops.
 
+
 ## Setup (NixOS desktop)
 
 The former Ubuntu desktop is now managed as a complete NixOS system with Home Manager.
@@ -107,3 +108,4 @@ Theming: manually configuring gtk, qt, various apps, bars, compositor gaps and c
 Power Management: custom scripts or additional daemons
 Greeter: gdm, sddm, lightdm, greetd
 ```
+

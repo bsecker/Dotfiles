@@ -42,6 +42,8 @@
       "niri --version": "allow",
       "niri validate *": "allow",
 
+      "nix eval *": "allow",
+
     }
   },
 }

@@ -17,7 +17,7 @@ let
       gnused
       coreutils
     ];
-    text = builtins.readFile ../scripts/gen_kubeconfig.sh;
+    text = builtins.readFile ../../scripts/gen_kubeconfig.sh;
   };
 in
 {
@@ -27,11 +27,12 @@ in
   home.homeDirectory = homeDir;
   home.stateVersion = "25.11";
   home.sessionPath = [ "$HOME/.local/bin" ];
-  home.sessionVariables.SUDO_PROMPT = builtins.readFile ../sudoers.lecture;
+  home.sessionVariables.SUDO_PROMPT = builtins.readFile ../../sudoers.lecture;
 
   home.packages = with pkgs; [
     # shell tools
     eza
+    vim
     just
     bun
     github-cli
@@ -47,7 +48,7 @@ in
     kubectx
     gnumake
     htop
-    btop # kind of nice but idk
+    btop
     dive
     git-town
     gen-kubeconfig
@@ -83,7 +84,7 @@ in
   };
 
   xdg.configFile."opencode" = {
-    source = ../xdg/opencode;
+    source = ../../xdg/opencode;
     recursive = true;
     force = true;
   };
@@ -133,13 +134,11 @@ in
         cat = "bat";
         gloga = "git log --oneline --decorate --color --graph --all";
         oc = "opencode";
-        charging = "watch -n 0.1 upower -i $(upower -e | grep BAT)";
         ghs = "gh stack";
         lg = "lazygit";
         staged = "git diff --staged";
         ghpr = "gh pr view --web";
         push = "git push --force-with-lease";
-        scanwifi = "nmcli device wifi list --rescan yes";
       }
       // extraShellAliases;
 
