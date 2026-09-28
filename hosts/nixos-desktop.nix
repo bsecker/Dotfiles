@@ -46,7 +46,9 @@ in
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
   hardware.nvidia.open = false;
-  programs.steam.enable = true;
+  hardware.nvidia.powerManagement.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   # Host identity, networking, and locale
   networking.hostName = "BenjaminDesktop-NixOS";
@@ -66,6 +68,8 @@ in
   };
 
 
+  programs.steam.enable = true;
+  services.tailscale.enable = true;
 
 
   # NixOS system settings
@@ -88,6 +92,10 @@ in
       pkgs.firefox-bin
       zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       pkgs.discord
+      pkgs.godot
+      pkgs.obsidian
+      pkgs.feh
+      pkgs.krita
     ];
 
     # Niri host-specific settings
