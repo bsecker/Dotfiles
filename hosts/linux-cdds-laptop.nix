@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 let
   username = "benjamin";
   homeDir = "/home/${username}";
@@ -7,6 +7,9 @@ in
   imports = [ ../modules/home/linux.nix ../modules/home/niri.nix ../modules/home/ubuntu.nix ];
   dotfiles.niri.hostConfig = ../xdg/niri/ubuntu-laptop.kdl;
   dotfiles.niri.hasBacklight = true;
+  dotfiles.niri.swaylockPackage = pkgs.writeShellScriptBin "swaylock" ''
+    exec /usr/bin/swaylock "$@"
+  '';
 
   _module.args = {
     inherit username homeDir;

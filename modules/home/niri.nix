@@ -37,6 +37,11 @@ in
       default = false;
       description = "Whether to show the laptop backlight control in Waybar.";
     };
+    swaylockPackage = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.swaylock;
+      description = "The swaylock package used by the Niri session.";
+    };
   };
 
   config = {
@@ -45,7 +50,7 @@ in
       fuzzel
       waybar
       mako
-      swaylock
+      cfg.swaylockPackage
       brightnessctl
       wlsunset
       wl-clipboard
@@ -58,7 +63,7 @@ in
     systemd.user.services.waybar = mkNiriService "${pkgs.waybar}/bin/waybar --config ${config.xdg.configHome}/waybar/config --style ${config.xdg.configHome}/waybar/style.css";
     systemd.user.services.mako = mkNiriService "${pkgs.mako}/bin/mako";
     systemd.user.services.wlsunset = mkNiriService "${pkgs.wlsunset}/bin/wlsunset -t 3500 -s 19:00";
-    systemd.user.services.swayidle = mkNiriService "${pkgs.swayidle}/bin/swayidle -w timeout 601 'niri msg action power-off-monitors' timeout 600 '${pkgs.swaylock}/bin/swaylock -f' before-sleep '${pkgs.swaylock}/bin/swaylock -f'";
+    systemd.user.services.swayidle = mkNiriService "${pkgs.swayidle}/bin/swayidle -w timeout 601 'niri msg action power-off-monitors' timeout 600 '${cfg.swaylockPackage}/bin/swaylock -f' before-sleep '${cfg.swaylockPackage}/bin/swaylock -f'";
     systemd.user.services.pomodoro = mkNiriService "${pomodoro}/bin/pomodoro daemon";
     systemd.user.services.openai-codex-usage = {
       Unit.Description = "Refresh OpenAI Codex usage cache";

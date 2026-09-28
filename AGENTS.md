@@ -1,3 +1,4 @@
+- Check which computer you are currently operating on by opening the current-computer file. Assume questions always are related to the current machine.
 - never run `just` commands or `nix switch` commands without approval first
 - validate both generated Niri host configurations with `niri validate -c <generated-config>` after Niri configuration changes
 - when I refer to pi, I am talking about pi agent, not raspberry pi
