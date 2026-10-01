@@ -45,8 +45,9 @@ in
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
-  hardware.nvidia.open = false;
+  hardware.nvidia.open = true;
   hardware.nvidia.powerManagement.enable = true;
+  hardware.nvidia.powerManagement.kernelSuspendNotifier = true;
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
