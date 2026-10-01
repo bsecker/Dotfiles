@@ -143,7 +143,7 @@ in
         oc = "opencode";
         ghs = "gh stack";
         lg = "lazygit";
-        dot = "cd ~/Dotfiles"; 
+        dot = "cd ~/Dotfiles; nvim ."; 
 
         # Git aliases
         gloga = "git log --oneline --decorate --color --graph --all";
