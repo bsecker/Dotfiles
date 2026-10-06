@@ -13,6 +13,7 @@ in
   # Boot and hardware
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
@@ -97,6 +98,7 @@ in
       pkgs.obsidian
       pkgs.feh
       pkgs.krita
+      pkgs.unzip
     ];
 
     # Niri host-specific settings
