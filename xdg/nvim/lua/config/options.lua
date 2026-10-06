@@ -10,3 +10,6 @@ vim.g.lazyvim_python_lsp = "ty"
 
 vim.opt.wrap = true
 vim.opt.wildignore:append({ "*/applications/PX4-Autopilot/*" })
+
+-- let repos define their own nvim config
+vim.o.exrc = true
