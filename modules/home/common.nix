@@ -148,6 +148,7 @@ in
         # Git aliases
         gloga = "git log --oneline --decorate --color --graph --all";
         ghpr = "gh pr view --web";
+        gt = "git town";
         push = "git push --force-with-lease";
         amend = "git commit --amend --no-edit";
         staged = "git diff --staged";
