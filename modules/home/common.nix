@@ -125,10 +125,9 @@ in
       enable = true;
       enableCompletion = true;
 
-      # Zsh requires finite limits; use its maximum supported history size
       history = {
-        size = 2147483647;
-        save = 2147483647;
+        size = 100000000;
+        save = 100000000;
       };
 
       shellAliases = {
