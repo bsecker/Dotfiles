@@ -2,7 +2,6 @@
   pkgs,
   pkgs-unstable,
   hunk,
-  worktrunk,
   username,
   homeDir,
   gitEmail,
@@ -24,7 +23,6 @@ in
 {
   imports = [
     hunk.homeManagerModules.default
-    worktrunk.homeModules.default
   ];
 
   home.username = username;
@@ -61,7 +59,7 @@ in
     pkgs-unstable.claude-code
     pkgs-unstable.devenv
     pkgs-unstable.codex
-    pkgs-unstable.opencode
+    # pkgs-unstable.opencode
     pkgs-unstable.pi-coding-agent
 
     # python
@@ -89,6 +87,22 @@ in
     enable = true;
     nix-direnv.enable = true;
     enableZshIntegration = true;
+  };
+  programs.opencode = {
+    enable = true;
+    package = pkgs-unstable.opencode.overrideAttrs (oldAttrs: {
+      # Correct the dependency hash for OpenCode 2.2.5 in the pinned nixpkgs.
+      node_modules = oldAttrs.node_modules.overrideAttrs {
+        outputHash = "sha256-prx9dX7kUvs/E3zopkaPk5LXh3xJAy5sZeum/W8L7cA=";
+      };
+    });
+    enableMcpIntegration = true;
+    cli = {
+      session = {
+        thinking = "show";
+      };
+    };
+    web.enable = true;
   };
 
   xdg.configFile."opencode" = {
@@ -119,6 +133,7 @@ in
     fzf = {
       enable = true;
       enableZshIntegration = true;
+      enableNushellIntegration = false;
     };
 
     zsh = {

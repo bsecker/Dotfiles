@@ -7,9 +7,9 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
-    home-manager.url = "github:nix-community/home-manager/release-26.05";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager-darwin.url = "github:nix-community/home-manager/release-25.11";
+    home-manager-darwin.url = "github:nix-community/home-manager/master";
     home-manager-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
     hunk = {
       url = "github:modem-dev/hunk";
@@ -19,9 +19,8 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    worktrunk.url = "github:max-sixty/worktrunk";
   };
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, home-manager-darwin, hunk, worktrunk, zen-browser, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nixpkgs-unstable, home-manager, home-manager-darwin, hunk, zen-browser, ... }:
   let
     unstableFor = system: import nixpkgs-unstable { inherit system; config.allowUnfree = true; };
     homeManagerIntegration = {
@@ -33,14 +32,14 @@
       specialArgs = {
         inherit self;
         pkgs-unstable = unstableFor "aarch64-darwin";
-        inherit hunk worktrunk;
+        inherit hunk;
       };
       modules = [
         ./modules/darwin/base.nix
         home-manager-darwin.darwinModules.home-manager
         homeManagerIntegration
         { home-manager.extraSpecialArgs = {
-            inherit hunk worktrunk;
+            inherit hunk;
             pkgs-unstable = unstableFor "aarch64-darwin";
           };
         }
@@ -51,14 +50,14 @@
     mkNixOSSystem = { system ? "x86_64-linux", hostModule }: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit self hunk worktrunk zen-browser;
+        inherit self hunk zen-browser;
         pkgs-unstable = unstableFor system;
       };
       modules = [
         home-manager.nixosModules.home-manager
         homeManagerIntegration
         { home-manager.extraSpecialArgs = {
-            inherit hunk worktrunk;
+            inherit hunk;
             pkgs-unstable = unstableFor system;
           };
         }
@@ -75,7 +74,7 @@
       };
       extraSpecialArgs = {
         pkgs-unstable = unstableFor system;
-        inherit hunk worktrunk;
+        inherit hunk;
       };
       modules = [
         hostModule
