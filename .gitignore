@@ -3,3 +3,8 @@ xdg/opencode/permission-log.json
 current-computer
 
 __pycache__/
+
+# Home Manager generates this per-host file outside the checkout.
+/xdg/niri/config.kdl
+
+result

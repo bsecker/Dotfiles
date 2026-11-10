@@ -60,6 +60,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        marksman = false,
         terraformls = false,
         tofu_ls = { root_dir = root_dir({ ".terraform", ".git" }) },
         ruff = { root_dir = root_dir({ "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" }) },

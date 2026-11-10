@@ -81,6 +81,7 @@ in
   };
   programs.worktrunk = {
     enable = true;
+    package = pkgs-unstable.worktrunk;
     enableZshIntegration = true;
   };
   programs.direnv = {
@@ -161,7 +162,6 @@ in
         lah = "ls -lah";
         cat = "bat";
         oc = "opencode";
-        ghs = "gh stack";
         lg = "lazygit";
         dot = "cd ~/Dotfiles; nvim ."; 
 
