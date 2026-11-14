@@ -75,6 +75,7 @@ in
 
 
   # NixOS system settings
+  programs.nix-ld.enable = true;
   nixpkgs.config.allowUnfree = true;
   services.openssh.enable = true;
 
@@ -99,6 +100,8 @@ in
       pkgs.feh
       pkgs.krita
       pkgs.unzip
+      pkgs.qbittorrent
+      pkgs.vlc
     ];
 
     # Niri host-specific settings

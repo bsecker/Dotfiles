@@ -62,7 +62,7 @@ in
     # Waybar does not auto-discover the generated file named "config".
     systemd.user.services.waybar = mkNiriService "${pkgs.waybar}/bin/waybar --config ${config.xdg.configHome}/waybar/config --style ${config.xdg.configHome}/waybar/style.css";
     systemd.user.services.mako = mkNiriService "${pkgs.mako}/bin/mako";
-    systemd.user.services.wlsunset = mkNiriService "${pkgs.wlsunset}/bin/wlsunset -t 3500 -s 19:00";
+    systemd.user.services.wlsunset = mkNiriService "${pkgs.wlsunset}/bin/wlsunset -t 3500 -s 19:00 -S 06:30";
     systemd.user.services.swayidle = mkNiriService "${pkgs.swayidle}/bin/swayidle -w timeout 601 'niri msg action power-off-monitors' timeout 600 '${cfg.swaylockPackage}/bin/swaylock -f' before-sleep '${cfg.swaylockPackage}/bin/swaylock -f'";
     systemd.user.services.pomodoro = mkNiriService "${pomodoro}/bin/pomodoro daemon";
     systemd.user.services.openai-codex-usage = {
